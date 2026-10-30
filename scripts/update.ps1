@@ -62,7 +62,36 @@ function Get-Json([string]$Url) {
   $t = Get-Text $Url
   $i = $t.IndexOfAny([char[]]'{[')
   if ($i -gt 0) { $t = $t.Substring($i) }
-  return ($t | ConvertFrom-Json)
+  return (ConvertFrom-JsonText $t)
+}
+
+# PowerShell 7 wandelt ISO-Datumsangaben beim Einlesen in DateTime (lokale Zeit) um.
+# Das verfälscht Datumswerte, daher bleiben alle Werte hier Text.
+$JsonDateKind = (Get-Command ConvertFrom-Json).Parameters.ContainsKey('DateKind')
+function ConvertFrom-JsonText([string]$t) {
+  if ($PSVersionTable.PSVersion.Major -lt 6) { return ($t | ConvertFrom-Json) }
+  if ($JsonDateKind) { return ($t | ConvertFrom-Json -DateKind String) }
+  $doc = [System.Text.Json.JsonDocument]::Parse($t)
+  try { return (Convert-JsonElement $doc.RootElement) } finally { $doc.Dispose() }
+}
+function Convert-JsonElement($e) {
+  switch ($e.ValueKind.ToString()) {
+    'Object' {
+      $o = [ordered]@{}
+      foreach ($p in $e.EnumerateObject()) { $o[$p.Name] = Convert-JsonElement $p.Value }
+      return [pscustomobject]$o
+    }
+    'Array' {
+      $a = New-Object System.Collections.Generic.List[object]
+      foreach ($x in $e.EnumerateArray()) { $a.Add((Convert-JsonElement $x)) }
+      return , $a.ToArray()
+    }
+    'String' { return $e.GetString() }
+    'Number' { $l = 0L; if ($e.TryGetInt64([ref]$l)) { return $l }; return $e.GetDouble() }
+    'True'   { return $true }
+    'False'  { return $false }
+    default  { return $null }
+  }
 }
 
 function Save-Json($Obj, [string]$Path) {
@@ -73,7 +102,7 @@ function Save-Json($Obj, [string]$Path) {
 
 function Read-JsonFile([string]$Path) {
   if (-not (Test-Path $Path)) { return $null }
-  try { return ([IO.File]::ReadAllText($Path, $Utf8) | ConvertFrom-Json) } catch { return $null }
+  try { return (ConvertFrom-JsonText ([IO.File]::ReadAllText($Path, $Utf8))) } catch { return $null }
 }
 
 function To-Utc([DateTimeOffset]$d) { $d.UtcDateTime.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", $Inv) }
@@ -309,7 +338,7 @@ function Update-DTM {
   }
   $byEvent = [ordered]@{}
   foreach ($it in ($items | Sort-Object { $_.startDate }, { [int]$_.sessionId })) {
-    $jt = $it.jsonText | ConvertFrom-Json
+    $jt = ConvertFrom-JsonText $it.jsonText
     $meta = Arr $jt.sessions | Where-Object { $_.sessionid -eq $jt.sessionid } | Select-Object -First 1
     if (-not $meta -or @('race', 'qualifying') -notcontains $meta.type) { continue }
     $k = "$($it.wigeEventId)"
@@ -336,7 +365,7 @@ function Update-DTM {
   $standings = $null
   $st = @(Arr (Get-Json "$DtmApi`?query=wigeStandings&raceSeries=DTM&startDate=$season-01-01&endDate=$season-12-31").wigeStandingses)
   if ($st.Count -gt 0) {
-    $sj = ($st | Select-Object -Last 1).jsonText | ConvertFrom-Json
+    $sj = ConvertFrom-JsonText ($st | Select-Object -Last 1).jsonText
     $mk = {
       param($list, $isDriver)
       foreach ($x in (Arr $list | Sort-Object { [int]$_.position })) {
@@ -760,7 +789,7 @@ function Update-WEC {
     Start-Sleep -Milliseconds 300
     $ld = $null
     foreach ($m in [regex]::Matches($page, '<script type="application/ld\+json">([\s\S]*?)</script>')) {
-      try { $j = $m.Groups[1].Value | ConvertFrom-Json } catch { continue }
+      try { $j = ConvertFrom-JsonText $m.Groups[1].Value } catch { continue }
       if ($j.'@type' -eq 'SportsEvent') { $ld = $j; break }
     }
     if (-not $ld) { continue }
