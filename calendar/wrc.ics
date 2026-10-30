@@ -1,0 +1,176 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Motorsport-Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Motorsport · Rallye-WM (WRC)
+X-WR-TIMEZONE:Europe/Vienna
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VEVENT
+UID:wrc-2027-rallye-automobile-monte-carlo-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270121
+DTEND;VALUE=DATE:20270125
+SUMMARY:WRC · Rallye Automobile Monte Carlo · Rennwochenende
+LOCATION:Rallye Automobile Monte Carlo\, Gap\, Provence-Alpes-Côte d'Azur\
+ , France
+DESCRIPTION:Rallye-WM (WRC)\nRallye Automobile Monte Carlo\nZeiten ohne Gew
+ ähr. Quelle: Wikipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-sweden-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270218
+DTEND;VALUE=DATE:20270222
+SUMMARY:WRC · Rally Sweden · Rennwochenende
+LOCATION:Rally Sweden\, Umeå\, Västerbotten County\, Sweden
+DESCRIPTION:Rallye-WM (WRC)\nRally Sweden\nZeiten ohne Gewähr. Quelle: Wik
+ ipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-safari-rally-kenya-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270318
+DTEND;VALUE=DATE:20270322
+SUMMARY:WRC · Safari Rally Kenya · Rennwochenende
+LOCATION:Safari Rally Kenya\, Nairobi\, Nairobi County\, Kenya
+DESCRIPTION:Rallye-WM (WRC)\nSafari Rally Kenya\nZeiten ohne Gewähr. Quell
+ e: Wikipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-croatia-rally-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270408
+DTEND;VALUE=DATE:20270412
+SUMMARY:WRC · Croatia Rally · Rennwochenende
+LOCATION:Croatia Rally\, Rijeka\, Primorje-Gorski Kotar County\, Croatia
+DESCRIPTION:Rallye-WM (WRC)\nCroatia Rally\nZeiten ohne Gewähr. Quelle: Wi
+ kipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-islas-canarias-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270506
+DTEND;VALUE=DATE:20270510
+SUMMARY:WRC · Rally Islas Canarias · Rennwochenende
+LOCATION:Rally Islas Canarias\, Las Palmas\, Gran Canaria\, Spain
+DESCRIPTION:Rallye-WM (WRC)\nRally Islas Canarias\nZeiten ohne Gewähr. Que
+ lle: Wikipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-japan-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270603
+DTEND;VALUE=DATE:20270607
+SUMMARY:WRC · Rally Japan · Rennwochenende
+LOCATION:Rally Japan\, Toyota\, Aichi\, Japan
+DESCRIPTION:Rallye-WM (WRC)\nRally Japan\nZeiten ohne Gewähr. Quelle: Wiki
+ pedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-acropolis-rally-greece-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270624
+DTEND;VALUE=DATE:20270628
+SUMMARY:WRC · Acropolis Rally Greece · Rennwochenende
+LOCATION:Acropolis Rally Greece\, Loutraki\, Corinthia\, Greece
+DESCRIPTION:Rallye-WM (WRC)\nAcropolis Rally Greece\nZeiten ohne Gewähr. Q
+ uelle: Wikipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-d-italia-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270708
+DTEND;VALUE=DATE:20270712
+SUMMARY:WRC · Rally d'Italia · Rennwochenende
+LOCATION:Rally d'Italia\, Rome\, Italy
+DESCRIPTION:Rallye-WM (WRC)\nRally d'Italia\nZeiten ohne Gewähr. Quelle: W
+ ikipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-estonia-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270722
+DTEND;VALUE=DATE:20270726
+SUMMARY:WRC · Rally Estonia · Rennwochenende
+LOCATION:Rally Estonia\, Tartu\, Tartu County\, Estonia
+DESCRIPTION:Rallye-WM (WRC)\nRally Estonia\nZeiten ohne Gewähr. Quelle: Wi
+ kipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-finland-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270729
+DTEND;VALUE=DATE:20270802
+SUMMARY:WRC · Rally Finland · Rennwochenende
+LOCATION:Rally Finland\, Jyväskylä\, Central Finland\, Finland
+DESCRIPTION:Rallye-WM (WRC)\nRally Finland\nZeiten ohne Gewähr. Quelle: Wi
+ kipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-us-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270826
+DTEND;VALUE=DATE:20270830
+SUMMARY:WRC · Rally US · Rennwochenende
+LOCATION:Rally US\, Knoxville\, Tennessee\, United States
+DESCRIPTION:Rallye-WM (WRC)\nRally US\nZeiten ohne Gewähr. Quelle: Wikiped
+ ia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-scotland-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270930
+DTEND;VALUE=DATE:20271004
+SUMMARY:WRC · Rally Scotland · Rennwochenende
+LOCATION:Rally Scotland\, Aberdeen\, Scotland\, Great Britain
+DESCRIPTION:Rallye-WM (WRC)\nRally Scotland\nZeiten ohne Gewähr. Quelle: W
+ ikipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-del-paraguay-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20271021
+DTEND;VALUE=DATE:20271025
+SUMMARY:WRC · Rally del Paraguay · Rennwochenende
+LOCATION:Rally del Paraguay\, Encarnación\, Itapúa\, Paraguay
+DESCRIPTION:Rallye-WM (WRC)\nRally del Paraguay\nZeiten ohne Gewähr. Quell
+ e: Wikipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-chile-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20271104
+DTEND;VALUE=DATE:20271108
+SUMMARY:WRC · Rally Chile · Rennwochenende
+LOCATION:Rally Chile\, Concepción\, Biobío\, Chile
+DESCRIPTION:Rallye-WM (WRC)\nRally Chile\nZeiten ohne Gewähr. Quelle: Wiki
+ pedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+BEGIN:VEVENT
+UID:wrc-2027-rally-saudi-arabia-weekend@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20271125
+DTEND;VALUE=DATE:20271129
+SUMMARY:WRC · Rally Saudi Arabia · Rennwochenende
+LOCATION:Rally Saudi Arabia\, Jeddah\, Mecca Province\, Saudi Arabia
+DESCRIPTION:Rallye-WM (WRC)\nRally Saudi Arabia\nZeiten ohne Gewähr. Quell
+ e: Wikipedia (WRC-Saisonartikel)
+CATEGORIES:WRC
+END:VEVENT
+END:VCALENDAR

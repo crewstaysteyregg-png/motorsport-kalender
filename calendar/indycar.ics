@@ -1,0 +1,258 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Motorsport-Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Motorsport · IndyCar
+X-WR-TIMEZONE:Europe/Vienna
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VEVENT
+UID:indycar-2027-st-petersburg-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270307
+DTEND;VALUE=DATE:20270308
+SUMMARY:IndyCar · Streets of St. Petersburg · Rennen (Startzeit folgt)
+LOCATION:Streets of St. Petersburg\, St. Petersburg\, Florida
+DESCRIPTION:IndyCar\nStreets of St. Petersburg\nZeiten ohne Gewähr. Quelle
+ : indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-st-petersburg-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270307
+DTEND;VALUE=DATE:20270308
+SUMMARY:IndyCar · Streets of St. Petersburg · Rennen (Startzeit folgt)
+LOCATION:Streets of St. Petersburg\, St. Petersburg\, Florida
+DESCRIPTION:IndyCar\nStreets of St. Petersburg\nZeiten ohne Gewähr. Quelle
+ : indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-st-petersburg-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270307
+DTEND;VALUE=DATE:20270308
+SUMMARY:IndyCar · Streets of St. Petersburg · Rennen (Startzeit folgt)
+DESCRIPTION:IndyCar\nStreets of St. Petersburg\nZeiten ohne Gewähr. Quelle
+ : indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-st-petersburg-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270307
+DTEND;VALUE=DATE:20270308
+SUMMARY:IndyCar · Streets of St. Petersburg · Rennen (Startzeit folgt)
+LOCATION:Streets of St. Petersburg\, St. Petersburg\, Florida
+DESCRIPTION:IndyCar\nStreets of St. Petersburg\nZeiten ohne Gewähr. Quelle
+ : indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-phoenix-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270313
+DTEND;VALUE=DATE:20270314
+SUMMARY:IndyCar · Phoenix Raceway · Rennen (Startzeit folgt)
+LOCATION:Phoenix Raceway\, Avondale\, Arizona
+DESCRIPTION:IndyCar\nPhoenix Raceway\nZeiten ohne Gewähr. Quelle: indycar.
+ com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-phoenix-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270313
+DTEND;VALUE=DATE:20270314
+SUMMARY:IndyCar · Phoenix Raceway · Rennen (Startzeit folgt)
+LOCATION:Phoenix Raceway\, Avondale\, Arizona
+DESCRIPTION:IndyCar\nPhoenix Raceway\nZeiten ohne Gewähr. Quelle: indycar.
+ com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-arlington-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270321
+DTEND;VALUE=DATE:20270322
+SUMMARY:IndyCar · Streets of Arlington · Rennen (Startzeit folgt)
+LOCATION:Streets of Arlington\, Arlington\, Texas
+DESCRIPTION:IndyCar\nStreets of Arlington\nZeiten ohne Gewähr. Quelle: ind
+ ycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-arlington-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270321
+DTEND;VALUE=DATE:20270322
+SUMMARY:IndyCar · Streets of Arlington · Rennen (Startzeit folgt)
+LOCATION:Streets of Arlington\, Arlington\, Texas
+DESCRIPTION:IndyCar\nStreets of Arlington\nZeiten ohne Gewähr. Quelle: ind
+ ycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-barber-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270404
+DTEND;VALUE=DATE:20270405
+SUMMARY:IndyCar · Barber Motorsports Park · Rennen (Startzeit folgt)
+LOCATION:Barber Motorsports Park\, Birmingham\, Alabama
+DESCRIPTION:IndyCar\nBarber Motorsports Park\nZeiten ohne Gewähr. Quelle: 
+ indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-long-beach-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270418
+DTEND;VALUE=DATE:20270419
+SUMMARY:IndyCar · Streets of Long Beach · Rennen (Startzeit folgt)
+LOCATION:Streets of Long Beach\, Long Beach\, California
+DESCRIPTION:IndyCar\nStreets of Long Beach\nZeiten ohne Gewähr. Quelle: in
+ dycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-indianapolis-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270515
+DTEND;VALUE=DATE:20270516
+SUMMARY:IndyCar · Indianapolis Motor Speedway Road Course · Rennen (Start
+ zeit folgt)
+LOCATION:IMS Road Course\, Indianapolis\, Indiana
+DESCRIPTION:IndyCar\nIndianapolis Motor Speedway Road Course\nZeiten ohne G
+ ewähr. Quelle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-indianapolis-500-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270530
+DTEND;VALUE=DATE:20270531
+SUMMARY:IndyCar · 111th Running of the Indianapolis 500 · Rennen (Startze
+ it folgt)
+LOCATION:Indianapolis Motor Speedway\, Indianapolis\, Indiana
+DESCRIPTION:IndyCar\n111th Running of the Indianapolis 500\nZeiten ohne Gew
+ ähr. Quelle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-detroit-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270606
+DTEND;VALUE=DATE:20270607
+SUMMARY:IndyCar · Streets of Detroit · Rennen (Startzeit folgt)
+LOCATION:Streets of Detroit\, Detroit\, Michigan
+DESCRIPTION:IndyCar\nStreets of Detroit\nZeiten ohne Gewähr. Quelle: indyc
+ ar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-wwtr-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270613
+DTEND;VALUE=DATE:20270614
+SUMMARY:IndyCar · World Wide Technology Raceway · Rennen (Startzeit folgt
+ )
+LOCATION:World Wide Technology Raceway\, Madison\, Illinois
+DESCRIPTION:IndyCar\nWorld Wide Technology Raceway\nZeiten ohne Gewähr. Qu
+ elle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-road-america-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270627
+DTEND;VALUE=DATE:20270628
+SUMMARY:IndyCar · Road America · Rennen (Startzeit folgt)
+LOCATION:Road America\, Elkhart Lake\, Wisconsin
+DESCRIPTION:IndyCar\nRoad America\nZeiten ohne Gewähr. Quelle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-mid-ohio-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270704
+DTEND;VALUE=DATE:20270705
+SUMMARY:IndyCar · Mid-Ohio Sports Car Course · Rennen (Startzeit folgt)
+LOCATION:Mid-Ohio Sports Car Course\, Lexington\, Ohio
+DESCRIPTION:IndyCar\nMid-Ohio Sports Car Course\nZeiten ohne Gewähr. Quell
+ e: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-barcelona-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270718
+DTEND;VALUE=DATE:20270719
+SUMMARY:IndyCar · Circuit de Barcelona-Catalunya · Rennen (Startzeit folg
+ t)
+LOCATION:Circuit de Barcelona-Catalunya\, Barcelona\, Spain
+DESCRIPTION:IndyCar\nCircuit de Barcelona-Catalunya\nZeiten ohne Gewähr. Q
+ uelle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-portland-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270801
+DTEND;VALUE=DATE:20270802
+SUMMARY:IndyCar · Portland International Raceway · Rennen (Startzeit folg
+ t)
+LOCATION:Portland International Raceway\, Portland\, Oregon
+DESCRIPTION:IndyCar\nPortland International Raceway\nZeiten ohne Gewähr. Q
+ uelle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-markham-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270815
+DTEND;VALUE=DATE:20270816
+SUMMARY:IndyCar · Streets of Markham · Rennen (Startzeit folgt)
+LOCATION:Streets of Markham\, Markham\, Ontario
+DESCRIPTION:IndyCar\nStreets of Markham\nZeiten ohne Gewähr. Quelle: indyc
+ ar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-milwaukee-race1-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270828
+DTEND;VALUE=DATE:20270829
+SUMMARY:IndyCar · Milwaukee Mile - Race 1 (Rennen 1) · Rennen (Startzeit 
+ folgt)
+LOCATION:Milwaukee Mile\, West Allis\, Wisconsin
+DESCRIPTION:IndyCar\nMilwaukee Mile - Race 1 (Rennen 1)\nZeiten ohne Gewäh
+ r. Quelle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-milwaukee-race2-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270829
+DTEND;VALUE=DATE:20270830
+SUMMARY:IndyCar · Milwaukee Mile - Race 2 (Rennen 2) · Rennen (Startzeit 
+ folgt)
+LOCATION:Milwaukee Mile\, West Allis\, Wisconsin
+DESCRIPTION:IndyCar\nMilwaukee Mile - Race 2 (Rennen 2)\nZeiten ohne Gewäh
+ r. Quelle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+BEGIN:VEVENT
+UID:indycar-2027-laguna-seca-race@motorsport-kalender
+DTSTAMP:20261030T225326Z
+DTSTART;VALUE=DATE:20270905
+DTEND;VALUE=DATE:20270906
+SUMMARY:IndyCar · WeatherTech Raceway Laguna Seca · Rennen (Startzeit fol
+ gt)
+LOCATION:WeatherTech Raceway Laguna Seca\, Monterey\, California
+DESCRIPTION:IndyCar\nWeatherTech Raceway Laguna Seca\nZeiten ohne Gewähr. 
+ Quelle: indycar.com
+CATEGORIES:IndyCar
+END:VEVENT
+END:VCALENDAR

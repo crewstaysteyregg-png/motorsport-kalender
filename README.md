@@ -1,7 +1,8 @@
 # Motorsport Kalender
 
-Web-App mit Terminen, kompletten Ergebnissen und Meisterschaftsständen für
-**Formel 1, DTM, IMSA WeatherTech und GT World Challenge Europe** – dazu
+Web-App mit Terminen, Ergebnissen und Meisterschaftsständen für
+**Formel 1, DTM, IMSA WeatherTech, GT World Challenge Europe, FIA WEC, WRC,
+IndyCar, NASCAR Cup Series und MotoGP** – dazu
 Kalender-Abos für das iPhone und ein Scriptable-Widget mit Race-Countdown.
 
 Alles läuft kostenlos auf GitHub: Ein automatischer Job holt 4× täglich neue
@@ -40,7 +41,8 @@ Seite in Safari öffnen → Tab **„Abo & Widget“**.
   2. In der Web-App auf **„Widget-Skript kopieren“** tippen (Adresse ist schon eingetragen)
   3. In Scriptable **+** → einfügen → als „Motorsport“ speichern
   4. Home-Bildschirm lange drücken → **+** → Scriptable → **mittel** → Widget bearbeiten → Skript „Motorsport“
-  5. **Parameter** (optional): `F1` · `F1,DTM` · `IMSA,GTWC` · `race` (nur Rennen) · `F1,race`
+  5. **Parameter** (optional): `F1` · `F1,DTM` · `MOTOGP,WEC` · `race` (nur Rennen) · `F1,race`
+     – Kürzel: `F1`, `DTM`, `IMSA`, `GTWC`, `WEC`, `WRC`, `INDYCAR`, `NASCAR`, `MOTOGP`
   6. Sperrbildschirm: lange drücken → *Anpassen* → *Widgets* → Scriptable (rechteckig/rund) → „Motorsport“
 
 ## 3. Datenquellen
@@ -51,9 +53,17 @@ Seite in Safari öffnen → Tab **„Abo & Widget“**.
 | DTM | api.dtm.com (offizielle DTM-Seite) | api.dtm.com |
 | IMSA | `data/manual/seed.json` (offizieller Kalender 2027) | imsa.results.alkamelcloud.com (offizielle Zeitnahme) |
 | GTWC Europe | gt-world-challenge-europe.com + `seed.json` | gt-world-challenge-europe.com |
+| FIA WEC | fiawec.com (inkl. aller Session-Zeiten) | fiawec.com – Ergebnisse nur Hypercar-Klasse, Stand Hypercar + LMGT3 |
+| WRC | Wikipedia-Saisonartikel (wrc.com sperrt Abrufe) | Wikipedia: Platzierungen + Punkte aus der WM-Tabelle |
+| IndyCar | indycar.com (Renntag + Startzeit) | Wikipedia: Zielankunft aus der Meisterschaftstabelle |
+| NASCAR Cup | nascar.com (Training, Qualifying, Rennen) | nascar.com, komplett |
+| MotoGP | motogp.com (alle MotoGP-Sessions) | motogp.com, komplett (Qualifying, Sprint, Rennen) |
 
-- Ergebnisse: Qualifying, Sprint und Rennen, jeweils **komplett** mit allen Platzierungen
-  (bei IMSA/GTWC mit Klassen-Filter). Freie Trainings werden nicht gespeichert.
+- Ergebnisse: Qualifying, Sprint und Rennen, bei F1/DTM/IMSA/GTWC/NASCAR/MotoGP **komplett** mit allen
+  Platzierungen (bei IMSA/GTWC mit Klassen-Filter). Freie Trainings werden nicht gespeichert.
+- WEC zeigt LMGT3-Ergebnisse nicht, weil fiawec.com sie nur per JavaScript nachlädt.
+- WRC und IndyCar haben keine frei abrufbaren Zeitnahme-Daten; die Ergebnisse kommen aus den
+  Meisterschaftstabellen bei Wikipedia (Gesamtplatzierungen der eingeschriebenen Fahrer, ohne Zeiten).
 - Fällt eine Quelle aus, bleiben die zuletzt geladenen Daten dieser Serie erhalten.
   Unten auf der Seite steht, welche Quelle zuletzt nicht erreichbar war.
 

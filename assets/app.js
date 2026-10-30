@@ -7,7 +7,12 @@
     F1:   { name: 'Formel 1', short: 'F1', color: 'var(--f1)', logo: 'assets/logos/f1.svg', bg: 'dark' },
     DTM:  { name: 'DTM', short: 'DTM', color: 'var(--dtm)', logo: 'assets/logos/dtm.png', bg: 'cover' },
     IMSA: { name: 'IMSA WeatherTech', short: 'IMSA', color: 'var(--imsa)', logo: 'assets/logos/imsa.png', bg: 'dark' },
-    GTWC: { name: 'GT World Challenge Europe', short: 'GTWC', color: 'var(--gtwc)', logo: 'assets/logos/gtwc.svg', bg: 'dark' }
+    GTWC: { name: 'GT World Challenge Europe', short: 'GTWC', color: 'var(--gtwc)', logo: 'assets/logos/gtwc.svg', bg: 'dark' },
+    WEC: { name: 'FIA WEC', short: 'WEC', color: 'var(--wec)', logo: 'assets/logos/wec.png', bg: 'dark' },
+    WRC: { name: 'Rallye-WM (WRC)', short: 'WRC', color: 'var(--wrc)', logo: 'assets/logos/wrc.png', bg: 'light' },
+    INDYCAR: { name: 'IndyCar', short: 'IndyCar', color: 'var(--indycar)', logo: 'assets/logos/indycar.png', bg: 'light' },
+    NASCAR: { name: 'NASCAR Cup Series', short: 'NASCAR', color: 'var(--nascar)', logo: 'assets/logos/nascar.png', bg: 'light' },
+    MOTOGP: { name: 'MotoGP', short: 'MotoGP', color: 'var(--motogp)', logo: 'assets/logos/motogp.png', bg: 'light' }
   };
   const ORDER = Object.keys(SERIES);
 
@@ -26,6 +31,14 @@
     resSeries: null, resEvent: null, resSession: 0, resClass: '',
     stSeries: null, stTable: 0
   };
+
+  // Neu hinzugekommene Serien automatisch einblenden (auch bei gespeicherter Auswahl)
+  (function () {
+    const known = load('mk.known', ['F1', 'DTM', 'IMSA', 'GTWC']);
+    ORDER.forEach(k => { if (!known.includes(k) && !state.enabled.includes(k)) state.enabled.push(k); });
+    state.enabled = state.enabled.filter(k => SERIES[k]);
+    save('mk.known', ORDER); save('mk.series', state.enabled);
+  })();
 
   // ------------------------------------------------------------ Helpers
   function load(k, def) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : def; } catch (e) { return def; } }
@@ -338,7 +351,7 @@
 
     el.innerHTML = `<div class="toolbar">${seriesBtns}
         <select class="select" id="resEvent" aria-label="Rennen wählen">${evs.map(e => `<option value="${esc(e.id)}" ${e.id === ev.id ? 'selected' : ''}>${esc((e.date ? fDateUtc.format(dateOnly(e.date)) + ' · ' : '') + e.name)}</option>`).join('')}</select></div>
-      <div class="res-head" style="--c:${SERIES[sk].color}">${logo(sk)}<div><h2>${esc(ev.name)}${ev.cup ? `<span class="cup">${esc(ev.cup)}</span>` : ''}</h2><p>${esc(SERIES[sk].name)} · Saison ${esc(ev.season)}${ev.date ? ' · ' + esc(fDateLong.format(dateOnly(ev.date))) : ''}</p></div></div>
+      <div class="res-head" style="--c:${SERIES[sk].color}">${logo(sk)}<div><h2>${esc(ev.name)}${ev.cup ? `<span class="cup">${esc(ev.cup)}</span>` : ''}</h2><p>${esc(SERIES[sk].name)} · Saison ${esc(ev.season)}${ev.date ? ' · ' + esc(fDateLong.format(dateOnly(ev.date))) : ''}${ev.note ? '<br>' + esc(ev.note) : ''}</p></div></div>
       <div class="toolbar"><div class="pills">${ev.sessions.map((s, i) => `<button class="pillbtn ${i === state.resSession ? 'is-on' : ''}" data-sess="${i}">${esc(s.name)}</button>`).join('')}</div>
       ${classes.length > 1 ? `<select class="select" id="resClass" aria-label="Klasse"><option value="">Alle Klassen</option>${classes.map(c => `<option ${c === state.resClass ? 'selected' : ''}>${esc(c)}</option>`).join('')}</select>` : ''}</div>
       <div class="tablebox"><table class="res"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table></div>`;
@@ -431,7 +444,7 @@
     }).join('');
     $('#footer').innerHTML = `<p>${st}</p>
       <p>Alle Zeiten in Wiener Zeit (MEZ/MESZ). Angaben ohne Gewähr.</p>
-      <p>Quellen: Jolpica F1 API, dtm.com, IMSA Results (Al Kamel Systems), gt-world-challenge-europe.com. Logos sind Marken der jeweiligen Rechteinhaber. Privates Projekt ohne Verbindung zu den Serien.</p>`;
+      <p>Quellen: Jolpica F1 API, dtm.com, IMSA Results (Al Kamel Systems), gt-world-challenge-europe.com, fiawec.com, motogp.com, nascar.com, indycar.com, Wikipedia (WRC, IndyCar-Ergebnisse). Logos sind Marken der jeweiligen Rechteinhaber. Privates Projekt ohne Verbindung zu den Serien.</p>`;
   }
 
   function bindStatic() {

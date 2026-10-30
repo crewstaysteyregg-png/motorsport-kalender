@@ -9,6 +9,7 @@
      leer        -> alle Serien, nächste Session
      F1          -> nur Formel 1
      F1,DTM      -> mehrere Serien
+                    Kürzel: F1, DTM, IMSA, GTWC, WEC, WRC, INDYCAR, NASCAR, MOTOGP
      race        -> Countdown nur bis zum nächsten Rennen (kombinierbar: F1,race)
    ========================================================== */
 
@@ -16,10 +17,15 @@
 const BASE_URL = 'https://DEIN-NAME.github.io/motorsport-kalender/';
 
 const SERIES = {
-  F1:   { name: 'Formel 1', color: '#e10600', logo: 'f1.png' },
-  DTM:  { name: 'DTM', color: '#f5c400', logo: 'dtm.png' },
-  IMSA: { name: 'IMSA', color: '#2f7fff', logo: 'imsa.png' },
-  GTWC: { name: 'GTWC Europe', color: '#ff9900', logo: 'gtwc.png' }
+  F1:      { name: 'Formel 1', short: 'F1', color: '#e10600', logo: 'f1.png' },
+  DTM:     { name: 'DTM', short: 'DTM', color: '#f5c400', logo: 'dtm.png' },
+  IMSA:    { name: 'IMSA', short: 'IMSA', color: '#2f7fff', logo: 'imsa.png' },
+  GTWC:    { name: 'GTWC Europe', short: 'GTWC', color: '#ff9900', logo: 'gtwc.png' },
+  WEC:     { name: 'FIA WEC', short: 'WEC', color: '#14b8a6', logo: 'wec.png', dark: true },
+  WRC:     { name: 'Rallye-WM', short: 'WRC', color: '#a35cff', logo: 'wrc.png' },
+  INDYCAR: { name: 'IndyCar', short: 'IndyCar', color: '#22d3ee', logo: 'indycar.png' },
+  NASCAR:  { name: 'NASCAR Cup', short: 'NASCAR', color: '#8bd400', logo: 'nascar.png' },
+  MOTOGP:  { name: 'MotoGP', short: 'MotoGP', color: '#ff5aa5', logo: 'motogp.png' }
 };
 
 const fm = FileManager.local();
@@ -130,10 +136,10 @@ function carbon(w, h, accent) {
   return dc.getImage();
 }
 
-function logoBox(stack, img, w, h) {
+function logoBox(stack, img, w, h, dark) {
   const box = stack.addStack();
   box.size = new Size(w, h);
-  box.backgroundColor = Color.white();
+  box.backgroundColor = dark ? new Color('#0d0d0f') : Color.white();
   box.cornerRadius = 7;
   box.centerAlignContent();
   if (img) { const i = box.addImage(img); i.imageSize = new Size(w - 6, h - 6); i.applyFittingContentMode(); }
@@ -159,7 +165,7 @@ async function mediumWidget(data) {
   // --- linke Spalte
   const left = row.addStack(); left.layoutVertically(); left.size = new Size(186, 0);
   const head = left.addStack(); head.layoutHorizontally(); head.centerAlignContent();
-  logoBox(head, await loadLogo(main.ev.series), 46, 30);
+  logoBox(head, await loadLogo(main.ev.series), 46, 30, SERIES[main.ev.series].dark);
   head.addSpacer(8);
   const hs = head.addStack(); hs.layoutVertically();
   const lab = hs.addText('RACE COUNTDOWN'); lab.font = Font.boldSystemFont(8); lab.textColor = new Color('#9a9aa3');
@@ -189,7 +195,7 @@ async function mediumWidget(data) {
     const bar = r.addStack(); bar.size = new Size(3, 22); bar.backgroundColor = new Color(SERIES[x.ev.series].color); bar.cornerRadius = 1.5;
     r.addSpacer(5);
     const tx = r.addStack(); tx.layoutVertically();
-    const a = tx.addText(`${x.ev.series} · ${x.s.name}`); a.font = Font.semiboldSystemFont(9); a.textColor = Color.white(); a.lineLimit = 1;
+    const a = tx.addText(`${SERIES[x.ev.series].short} · ${x.s.name}`); a.font = Font.semiboldSystemFont(9); a.textColor = Color.white(); a.lineLimit = 1;
     const b = tx.addText(fmtShort(x)); b.font = Font.systemFont(9); b.textColor = new Color('#9a9aa3'); b.lineLimit = 1;
     right.addSpacer(4);
   }
@@ -210,15 +216,15 @@ async function lockWidget(data, family) {
 
   if (family === 'accessoryCircular') {
     w.addAccessoryWidgetBackground = true;
-    const s = w.addText(main.ev.series); s.font = Font.heavySystemFont(11); s.centerAlignText();
+    const s = w.addText(SERIES[main.ev.series].short); s.font = Font.heavySystemFont(11); s.centerAlignText();
     if (live) { const t = w.addText('LIVE'); t.font = Font.heavySystemFont(14); t.centerAlignText(); }
     else if (days >= 1) { const t = w.addText(String(days)); t.font = Font.heavySystemFont(20); t.centerAlignText(); const u = w.addText(days === 1 ? 'Tag' : 'Tage'); u.font = Font.systemFont(9); u.centerAlignText(); }
     else { const t = w.addDate(main.start); t.applyTimerStyle(); t.font = Font.heavySystemFont(11); t.centerAlignText(); }
   } else if (family === 'accessoryInline') {
-    const t = w.addText(live ? `${main.ev.series} ${main.s.name}: LIVE` : `${main.ev.series} ${main.s.name} in ${countdownText(main.start)}`);
+    const t = w.addText(live ? `${SERIES[main.ev.series].short} ${main.s.name}: LIVE` : `${SERIES[main.ev.series].short} ${main.s.name} in ${countdownText(main.start)}`);
     t.lineLimit = 1;
   } else {
-    const a = w.addText(`${main.ev.series} · ${shortName(main.ev.name)}`); a.font = Font.heavySystemFont(13); a.lineLimit = 1;
+    const a = w.addText(`${SERIES[main.ev.series].short} · ${shortName(main.ev.name)}`); a.font = Font.heavySystemFont(13); a.lineLimit = 1;
     const b = w.addText(`${main.s.name} · ${fmtShort(main)}`); b.font = Font.systemFont(11); b.lineLimit = 1;
     if (live) { const c = w.addText('● LIVE'); c.font = Font.heavySystemFont(16); }
     else if (days >= 1) { const c = w.addText(countdownText(main.start)); c.font = Font.heavySystemFont(16); }

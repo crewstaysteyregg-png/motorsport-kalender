@@ -1,7 +1,7 @@
 ﻿<#
   Motorsport-Kalender – Daten-Update
-  Holt Termine, Ergebnisse und Meisterschaftsstände für F1, DTM, IMSA und
-  GT World Challenge Europe und schreibt:
+  Holt Termine, Ergebnisse und Meisterschaftsstände für F1, DTM, IMSA,
+  GT World Challenge Europe, WEC, WRC, IndyCar, NASCAR und MotoGP und schreibt:
     data/events.json, data/standings.json, data/meta.json,
     data/results/<serie>.json, calendar/<serie>.ics, calendar/alle.ics
   Läuft in Windows PowerShell 5.1 und PowerShell 7 (GitHub Actions).
@@ -10,7 +10,8 @@
 [CmdletBinding()]
 param(
   [string]$Root = (Split-Path -Parent $PSScriptRoot),
-  [string[]]$Only = @('F1', 'DTM', 'IMSA', 'GTWC')
+  [string[]]$Only = @('F1', 'DTM', 'IMSA', 'GTWC', 'WEC', 'WRC', 'INDYCAR', 'NASCAR', 'MOTOGP'),
+  [switch]$LibOnly   # nur Funktionen laden (zum Testen: . ./scripts/update.ps1 -LibOnly)
 )
 
 $ErrorActionPreference = 'Stop'
@@ -30,7 +31,13 @@ $SeriesInfo = [ordered]@{
   DTM  = @{ name = 'DTM';                         short = 'DTM' }
   IMSA = @{ name = 'IMSA WeatherTech';            short = 'IMSA' }
   GTWC = @{ name = 'GT World Challenge Europe';   short = 'GTWC' }
+  WEC     = @{ name = 'FIA WEC';                  short = 'WEC' }
+  WRC     = @{ name = 'Rallye-WM (WRC)';          short = 'WRC' }
+  INDYCAR = @{ name = 'IndyCar';                  short = 'IndyCar' }
+  NASCAR  = @{ name = 'NASCAR Cup Series';        short = 'NASCAR' }
+  MOTOGP  = @{ name = 'MotoGP';                   short = 'MotoGP' }
 }
+$WikiUA = 'MotorsportKalender/1.0 (private calendar; https://github.com/crewstaysteyregg-png/motorsport-kalender)'
 
 # ---------------------------------------------------------------- Helpers
 
@@ -39,7 +46,9 @@ function Write-Log([string]$msg) { Write-Host ("[{0}] {1}" -f (Get-Date -Format 
 function Get-Text([string]$Url) {
   for ($try = 1; $try -le 3; $try++) {
     try {
-      $r = Invoke-WebRequest -Uri $Url -UseBasicParsing -TimeoutSec 60 -Headers @{ 'User-Agent' = $UA }
+      # Wikipedia verlangt einen aussagekräftigen User-Agent
+      $agent = if ($Url -match 'wikipedia\.org') { $WikiUA } else { $UA }
+      $r = Invoke-WebRequest -Uri $Url -UseBasicParsing -TimeoutSec 60 -Headers @{ 'User-Agent' = $agent }
       $bytes = $r.RawContentStream.ToArray()
       return $Utf8.GetString($bytes).TrimStart([char]0xFEFF)
     } catch {
@@ -609,6 +618,452 @@ function Update-GTWC {
   return @{ events = @($events); results = $results; standings = $standings }
 }
 
+# ---------------------------------------------------------------- Gemeinsame Helfer (Tabellen, Wikipedia)
+
+function TitleCase([string]$s) {
+  $t = $Inv.TextInfo.ToTitleCase($s.Trim().ToLowerInvariant())
+  return ($t -replace ' Of ', ' of ' -replace ' The ', ' the ' -replace ' De ', ' de ' -replace ' Del ', ' del ')
+}
+
+function Get-TableRows([string]$tableHtml) {
+  $rows = @()
+  foreach ($tr in [regex]::Matches($tableHtml, '<tr[^>]*>([\s\S]*?)</tr>')) {
+    $inner = $tr.Groups[1].Value -replace '<style[\s\S]*?</style>', '' -replace '<sup[\s\S]*?</sup>', ''
+    $cells = @([regex]::Matches($inner, '<t[dh][^>]*>([\s\S]*?)</t[dh]>') | ForEach-Object { Html-Text $_.Groups[1].Value })
+    if ($cells.Count) { $rows += , $cells }
+  }
+  return , $rows
+}
+
+function Get-WikiTables([string]$html) {
+  # alle class="wikitable"-Tabellen, auch wenn sie in Layout-Tabellen verschachtelt sind
+  $out = @()
+  foreach ($m in [regex]::Matches($html, '<table[^>]*class="[^"]*wikitable[^"]*"[^>]*>')) {
+    $depth = 0; $pos = $m.Index
+    $tok = [regex]::new('<table\b|</table>')
+    $t = $tok.Match($html, $pos)
+    while ($t.Success) {
+      if ($t.Value -eq '</table>') { $depth-- } else { $depth++ }
+      if ($depth -eq 0) { break }
+      $t = $t.NextMatch()
+    }
+    if (-not $t.Success) { continue }
+    $body = $html.Substring($m.Index, $t.Index + 8 - $m.Index)
+    # verschachtelte Tabellen (z. B. Legenden) entfernen
+    $body = $m.Value + [regex]::Replace($body.Substring($m.Length), '<table[\s\S]*?</table>', '')
+    $out += , (Get-TableRows $body)
+  }
+  return , $out
+}
+
+function Get-HtmlTables([string]$html) {
+  # Liefert pro <table> eine Liste von Zeilen (Array von Zelltexten); Kopfzeilen inklusive
+  $out = @()
+  foreach ($t in [regex]::Matches($html, '<table[\s\S]*?</table>')) {
+    $rows = @()
+    foreach ($tr in [regex]::Matches($t.Value, '<tr[^>]*>([\s\S]*?)</tr>')) {
+      $inner = $tr.Groups[1].Value -replace '<style[\s\S]*?</style>', '' -replace '<sup[\s\S]*?</sup>', ''
+      $cells = @([regex]::Matches($inner, '<t[dh][^>]*>([\s\S]*?)</t[dh]>') | ForEach-Object { Html-Text $_.Groups[1].Value })
+      if ($cells.Count) { $rows += , $cells }
+    }
+    $out += , $rows
+  }
+  return , $out
+}
+
+function Get-WikiSectionHtml([string]$page, [string]$titleRegex) {
+  $s = Get-Json "https://en.wikipedia.org/w/api.php?action=parse&page=$page&prop=sections&format=json&formatversion=2&redirects=1"
+  $sec = Arr $s.parse.sections | Where-Object { $_.line -match $titleRegex } | Select-Object -First 1
+  if (-not $sec) { return $null }
+  Start-Sleep -Milliseconds 800
+  $p = Get-Json "https://en.wikipedia.org/w/api.php?action=parse&page=$page&prop=text&section=$($sec.index)&format=json&formatversion=2&disabletoc=1&redirects=1"
+  Start-Sleep -Milliseconds 800
+  return $p.parse.text
+}
+
+function Get-WikiTable([string]$page, [string]$titleRegex, [string]$headerRegex) {
+  # erste wikitable des Abschnitts, deren Kopfzeile zu $headerRegex passt
+  $html = Get-WikiSectionHtml $page $titleRegex
+  if (-not $html) { return $null }
+  foreach ($t in (Get-WikiTables $html)) {
+    if ($t.Count -gt 1 -and ($t[0] -join '|') -match $headerRegex) { return , $t }
+  }
+  return $null
+}
+
+function Results-FromStandings($table, $roundNames, [string]$series, [int]$season, $roundDates, [string]$note) {
+  # Rekonstruiert Rennergebnisse aus einer Wikipedia-Meisterschaftstabelle (eine Spalte je Lauf)
+  $head = $table[0]
+  # Spaltenzahl aus den Datenzeilen (Kopfzellen können zusammengefasst sein, z. B. Doppelrennen)
+  $width = ($table | Select-Object -Skip 1 | Where-Object { $_[0] -match '^\d+$' } | ForEach-Object { $_.Count } | Group-Object | Sort-Object Count -Descending | Select-Object -First 1).Name
+  if (-not $width) { return @() }
+  $width = [int]$width
+  $first = 2; $last = $width - 2
+  $out = @()
+  for ($c = $first; $c -le $last; $c++) {
+    $i = $c - $first
+    $rows = @()
+    foreach ($r in ($table | Select-Object -Skip 1)) {
+      if ($r.Count -ne $width -or $r[0] -notmatch '^\d+$') { continue }
+      $cell = "$($r[$c])".Trim()
+      if (-not $cell) { continue }
+      $m = [regex]::Match($cell, '^(\d+)')
+      $pts = $null
+      $pm = [regex]::Match($cell, '\s(\d+(?:\+\d+)*)$')
+      if ($pm.Success) { $pts = (($pm.Groups[1].Value -split '\+') | ForEach-Object { [int]$_ } | Measure-Object -Sum).Sum }
+      if ($m.Success) { $rows += , @{ p = [int]$m.Groups[1].Value; row = (New-Row -pos $m.Groups[1].Value -driver $r[1] -pts $pts) } }
+      else { $rows += , @{ p = 999; row = (New-Row -driver $r[1] -status ($cell -split '\s')[0] -pts $pts) } }
+    }
+    $ranked = @($rows | Where-Object { $_.p -lt 999 })
+    if ($ranked.Count -eq 0) { continue }
+    $name = if ($i -lt @($roundNames).Count) { $roundNames[$i] } elseif ($c -lt $head.Count) { $head[$c] } else { "Lauf $($i + 1)" }
+    $date = if ($roundDates -and $i -lt @($roundDates).Count) { $roundDates[$i] } else { $null }
+    $out += , [ordered]@{
+      id = "$($series.ToLowerInvariant())-$season-$(Slug $name)"; series = $series; season = $season; round = $i + 1
+      name = $name; circuit = $name; date = $date; note = $note
+      sessions = @([ordered]@{ name = 'Rennen'; type = 'race'; rows = @($rows | Sort-Object { $_.p } | ForEach-Object { $_.row }) })
+    }
+  }
+  return $out
+}
+
+function Standings-FromWiki($table, [string]$title) {
+  $rows = foreach ($r in ($table | Select-Object -Skip 1)) {
+    if ($r[0] -notmatch '^\d+$') { continue }
+    [ordered]@{ pos = $r[0]; name = $r[1]; pts = $r[-1] }
+  }
+  [ordered]@{ title = $title; rows = @($rows) }
+}
+
+function Fix-Offset([string]$s) { return ($s -replace '([+-]\d\d)(\d\d)$', '$1:$2') }
+
+# ---------------------------------------------------------------- FIA WEC (fiawec.com)
+
+$WecBase = 'https://www.fiawec.com'
+
+function Get-WecSessionName([string]$n) {
+  switch -Regex ($n) {
+    '^Free Practice (\d)(.*)$' { return "$($Matches[1]). Freies Training$($Matches[2])" }
+    '^Race$'                   { return 'Rennen' }
+    default                    { return $n }
+  }
+}
+
+function Update-WEC {
+  $wecHome = Get-Text "$WecBase/en"
+  $slugs = [regex]::Matches($wecHome,'href="(?:https://www\.fiawec\.com)?/en/race/([a-z0-9-]+-(\d{4}))"') |
+    Where-Object { [int]$_.Groups[2].Value -ge $Year -and [int]$_.Groups[2].Value -le ($Year + 1) -and $_.Groups[1].Value -notmatch 'prologue' } |
+    ForEach-Object { $_.Groups[1].Value } | Select-Object -Unique
+  $events = @(); $results = @()
+  foreach ($slug in $slugs) {
+    $page = Get-Text "$WecBase/en/race/$slug"
+    Start-Sleep -Milliseconds 300
+    $ld = $null
+    foreach ($m in [regex]::Matches($page, '<script type="application/ld\+json">([\s\S]*?)</script>')) {
+      try { $j = $m.Groups[1].Value | ConvertFrom-Json } catch { continue }
+      if ($j.'@type' -eq 'SportsEvent') { $ld = $j; break }
+    }
+    if (-not $ld) { continue }
+    $season = [int]($slug -replace '.*-(\d{4})$', '$1')
+    $name = ($ld.name -replace '^WEC\s+', '' -replace "\s+$season$", '').Trim()
+    $st = [DateTimeOffset]::Parse("$($ld.startDate)", $Inv); $en = [DateTimeOffset]::Parse("$($ld.endDate)", $Inv)
+    $raceMin = 360
+    if ($name -match '(\d+)\s*Hours') { $raceMin = [int]$Matches[1] * 60 } elseif ($name -match '1812') { $raceMin = 600 }
+    $loc = ''
+    if ($ld.location -and $ld.location.address) { $loc = "$($ld.location.address)" }
+    $i = 0
+    $sessions = foreach ($s in (Arr $ld.subEvent)) {
+      if (-not $s.startDate) { continue }
+      $i++
+      $sn = ($s.name -replace "\s+-\s+$([regex]::Escape($name))$", '' -replace '\s+-\s+', ' ').Trim()
+      $type = if ($sn -match '^Race') { 'race' } elseif ($sn -match 'Qualifying|Hyperpole') { 'quali' } else { 'practice' }
+      $dur = switch ($type) { 'race' { $raceMin } 'quali' { 20 } default { 90 } }
+      $ss = [DateTimeOffset]::Parse("$($s.startDate)", $Inv)
+      New-Session "wec-$season-$(Slug $name)-$i" (Get-WecSessionName $sn) $type (To-Utc $ss) (To-Utc $ss.AddMinutes($dur))
+    }
+    $ev = New-Event 'WEC' $season $name $(if ($ld.location.name) { $ld.location.name } else { $name }) $loc `
+      $st.ToString('yyyy-MM-dd', $Inv) $en.ToString('yyyy-MM-dd', $Inv) @($sessions | Sort-Object { $_.start }) 'fiawec.com'
+    $events += , $ev
+
+    # Ergebnisse (Hypercar-Klassement; andere Klassen lädt die Seite nur per JavaScript)
+    $links = [regex]::Matches($page, 'resultats-1\?raceId=(\d+)&amp;sessionId=(\d+)') | ForEach-Object { @{ race = $_.Groups[1].Value; sess = $_.Groups[2].Value } }
+    if (-not $links) { continue }
+    $first = @($links)[0]
+    $rp = Get-Text "$WecBase/en/page/resultats-1?raceId=$($first.race)&sessionId=$($first.sess)"
+    Start-Sleep -Milliseconds 300
+    $opts = [regex]::Matches($rp, 'option class="form-check-input"\s*(?:selected)?\s*value="(\d+)">([^<]+)<') | ForEach-Object { @{ id = $_.Groups[1].Value; name = $_.Groups[2].Value.Trim() } }
+    $want = @($opts | Where-Object { $_.name -match '^(RACE|HYPERPOLE - HYPERCAR|QUALIFYING - HYPERCAR)$' -and (@($links | ForEach-Object { $_.sess }) -contains $_.id) })
+    $rsess = @()
+    foreach ($o in ($want | Sort-Object { if ($_.name -eq 'RACE') { 2 } elseif ($_.name -match 'HYPERPOLE') { 1 } else { 0 } })) {
+      $html = if ($o.id -eq $first.sess) { $rp } else { Get-Text "$WecBase/en/page/resultats-1?raceId=$($first.race)&sessionId=$($o.id)" }
+      Start-Sleep -Milliseconds 300
+      $tm = [regex]::Match($html, '<table class="table table-sm table-standing[\s\S]*?</table>')
+      if (-not $tm.Success) { continue }
+      $heads = @([regex]::Matches([regex]::Match($tm.Value, '<thead[\s\S]*?</thead>').Value, '<t[hd][^>]*>([\s\S]*?)</t[hd]>') | ForEach-Object { (Html-Text $_.Groups[1].Value).ToLowerInvariant() })
+      $map = @{ 'pos.' = 'pos'; 'n°' = 'no'; 'team' = 'team'; 'laps' = 'laps'; 'total time' = 'time'; 'time' = 'time'; 'gap' = 'gap'; 'best lap' = 'best' }
+      $rows = foreach ($tr in [regex]::Matches([regex]::Match($tm.Value, '<tbody>([\s\S]*?)</tbody>').Groups[1].Value, '<tr[^>]*>([\s\S]*?)</tr>')) {
+        $cells = @([regex]::Matches($tr.Groups[1].Value, '<td[^>]*>([\s\S]*?)</td>') | ForEach-Object { Html-Text $_.Groups[1].Value })
+        $r = [ordered]@{ cls = 'Hypercar' }
+        for ($k = 0; $k -lt [Math]::Min($cells.Count, $heads.Count); $k++) {
+          $key = $map[$heads[$k]]
+          if ($key -and $cells[$k] -ne '' -and $cells[$k] -ne '-') { $r[$key] = ($cells[$k] -replace '^#', '') }
+        }
+        $r
+      }
+      $label = switch -Regex ($o.name) { '^RACE$' { 'Rennen (Hypercar)' } 'HYPERPOLE' { 'Hyperpole (Hypercar)' } default { 'Qualifying (Hypercar)' } }
+      if (@($rows).Count) { $rsess += , [ordered]@{ name = $label; type = $(if ($o.name -eq 'RACE') { 'race' } else { 'quali' }); rows = @($rows) } }
+    }
+    if ($rsess.Count) {
+      $results += , [ordered]@{ id = $ev.id; series = 'WEC'; season = $season; name = $name; circuit = $ev.circuit; date = $ev.end; sessions = $rsess }
+    }
+  }
+
+  # Meisterschaft
+  $standings = $null
+  $html = Get-Text "$WecBase/en/page/manufacturers-classification"
+  $titles = @('Hypercar · Hersteller', 'Hypercar · Fahrer', 'LMGT3 · Teams', 'LMGT3 · Fahrer')
+  $tables = @(); $n = 0
+  foreach ($t in (Get-HtmlTables $html)) {
+    $rows = foreach ($r in ($t | Select-Object -Skip 1)) {
+      if ($r[0] -notmatch '^\d+$') { continue }
+      $rest = @($r | Select-Object -Skip 1 | Where-Object { $_ -ne '' })
+      $no = $rest | Where-Object { $_ -match '^#\d+' } | Select-Object -First 1
+      $nm = $rest | Where-Object { $_ -notmatch '^#?\d+(\.\d+)?$' } | Select-Object -First 1
+      $label = if ($no) { "$no $($Inv.TextInfo.ToTitleCase("$nm".ToLowerInvariant()))" } else { $Inv.TextInfo.ToTitleCase("$nm".ToLowerInvariant()) }
+      [ordered]@{ pos = $r[0]; name = $label.Trim(); pts = ($r | Where-Object { $_ -ne '' } | Select-Object -Last 1) }
+    }
+    if (@($rows).Count) { $title = if ($n -lt $titles.Count) { $titles[$n] } else { "Wertung $($n + 1)" }; $tables += , [ordered]@{ title = $title; rows = @($rows) }; $n++ }
+  }
+  if ($tables.Count) { $standings = [ordered]@{ season = $Year; tables = $tables } }
+  return @{ events = $events; results = $results; standings = $standings }
+}
+
+# ---------------------------------------------------------------- WRC (Wikipedia)
+
+function Get-WrcCalendar([int]$season) {
+  $t = Get-WikiTable "$($season)_World_Rally_Championship" '^Calendar$' 'Start date.*Rally'
+  if (-not $t) { return @() }
+  $h = $t[0]
+  $iS = [array]::IndexOf($h, 'Start date'); $iE = [array]::IndexOf($h, 'Finish date'); $iR = [array]::IndexOf($h, 'Rally'); $iHq = [array]::IndexOf($h, 'Rally headquarters')
+  $out = @()
+  foreach ($r in ($t | Select-Object -Skip 1)) {
+    if ($r[0] -notmatch '^\d+$' -or $r.Count -lt $h.Count) { continue }
+    try {
+      $s = [datetime]::ParseExact("$($r[$iS]) $season", 'd MMMM yyyy', $Inv)
+      $e = [datetime]::ParseExact("$($r[$iE]) $season", 'd MMMM yyyy', $Inv)
+    } catch { continue }
+    $out += , @{ round = [int]$r[0]; name = $r[$iR]; hq = $(if ($iHq -ge 0) { $r[$iHq] -replace '\s+,', ',' } else { '' }); start = $s.ToString('yyyy-MM-dd', $Inv); end = $e.ToString('yyyy-MM-dd', $Inv) }
+  }
+  return $out
+}
+
+function Update-WRC {
+  $events = @()
+  $calCur = Get-WrcCalendar $Year
+  foreach ($s in @($Year, ($Year + 1))) {
+    $cal = if ($s -eq $Year) { $calCur } else { Get-WrcCalendar $s }
+    foreach ($c in $cal) { $events += , (New-Event 'WRC' $s $c.name $c.name $c.hq $c.start $c.end @() 'Wikipedia (WRC-Saisonartikel)') }
+  }
+  $season = $Year
+  $tbl = Get-WikiTable "$($season)_World_Rally_Championship" 'for Drivers' '^Pos\.?\|Driver'
+  $results = @()
+  if ($tbl) {
+    $results = Results-FromStandings $tbl @($calCur | ForEach-Object { $_.name }) 'WRC' $season @($calCur | ForEach-Object { $_.end }) 'Ergebnis laut WM-Tabelle (punkteberechtigte WRC-Fahrer, Punkte inkl. Super Sunday/Power Stage)'
+  }
+  $tables = @()
+  if ($tbl) { $tables += , (Standings-FromWiki $tbl 'Fahrer') }
+  $co = Get-WikiTable "$($season)_World_Rally_Championship" 'for Co-Drivers' '^Pos\.?\|Co-driver'
+  if ($co) { $tables += , (Standings-FromWiki $co 'Beifahrer') }
+  $standings = if ($tables.Count) { [ordered]@{ season = $season; tables = $tables } } else { $null }
+  return @{ events = $events; results = @($results); standings = $standings }
+}
+
+# ---------------------------------------------------------------- IndyCar (indycar.com + Wikipedia)
+
+$MonthsShort = @{ jan = 1; feb = 2; mar = 3; apr = 4; may = 5; jun = 6; jul = 7; aug = 8; sep = 9; oct = 10; nov = 11; dec = 12 }
+
+function Update-INDYCAR {
+  try { $ny = [TimeZoneInfo]::FindSystemTimeZoneById('America/New_York') } catch { $ny = [TimeZoneInfo]::FindSystemTimeZoneById('Eastern Standard Time') }
+  $html = Get-Text 'https://www.indycar.com/schedule'
+  $marks = [regex]::Matches($html, 'event-card-header-date">([^<]+)<')
+  $events = @()
+  for ($k = 0; $k -lt $marks.Count; $k++) {
+    $endIdx = if ($k + 1 -lt $marks.Count) { $marks[$k + 1].Index } else { $html.Length }
+    $blk = $html.Substring($marks[$k].Index, $endIdx - $marks[$k].Index)
+    $href = [regex]::Match($blk, 'href="/Schedule/(\d{4})/([^"]+)"')
+    if (-not $href.Success) { continue }
+    $yr = [int]$href.Groups[1].Value
+    $dm = [regex]::Match($marks[$k].Groups[1].Value.Trim(), '^([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2})')
+    if (-not $dm.Success) { continue }
+    $date = Get-Date -Year $yr -Month $MonthsShort[$dm.Groups[1].Value.ToLowerInvariant()] -Day ([int]$dm.Groups[2].Value)
+    $title = Html-Text ([regex]::Match($blk, 'class="event-card-title">([\s\S]*?)</').Groups[1].Value)
+    $track = Html-Text ([regex]::Match($blk, 'class="event-card-track-name">([\s\S]*?)</').Groups[1].Value)
+    $locn = Html-Text ([regex]::Match($blk, 'class="event-card-track-location">([\s\S]*?)</').Groups[1].Value)
+    $time = Html-Text ([regex]::Match($blk, 'class="event-card-header-time">([\s\S]*?)</').Groups[1].Value)
+    $name = if ($title) { $title } else { $href.Groups[2].Value -replace '-', ' ' }
+    if ($href.Groups[2].Value -match 'Race(\d)$') { $name = "$name (Rennen $($Matches[1]))" }
+    $key = $date.ToString('yyyy-MM-dd', $Inv)
+    $sid = "indycar-$yr-$(Slug $href.Groups[2].Value)-race"
+    $tm = [regex]::Match($time, '(\d{1,2}):(\d{2})\s*([AP]M)', 'IgnoreCase')
+    if ($tm.Success) {
+      $h = [int]$tm.Groups[1].Value % 12; if ($tm.Groups[3].Value -match 'P') { $h += 12 }
+      $local = New-Object DateTime($date.Year, $date.Month, $date.Day, $h, [int]$tm.Groups[2].Value, 0)
+      $st = New-Object DateTimeOffset($local, $ny.GetUtcOffset($local))
+      $sess = @(New-Session $sid 'Rennen' 'race' (To-Utc $st) (To-Utc $st.AddMinutes(150)))
+    } else {
+      $sess = @(New-Session $sid 'Rennen (Startzeit folgt)' 'race' $key $key $true)
+    }
+    $ev = New-Event 'INDYCAR' $yr $name $track $locn $key $key $sess 'indycar.com'
+    $ev.id = "indycar-$yr-$(Slug $href.Groups[2].Value)"
+    $events += , $ev
+  }
+
+  # Ergebnisse + Stand über Wikipedia (indycar.com lädt sie nur per JavaScript)
+  $season = $Year
+  $page = "$($season)_IndyCar_Series"
+  $sched = Get-WikiTable $page '^Schedule$' 'Race'
+  $names = @(); $dates = @()
+  if ($sched) {
+    $h = $sched[0]
+    $iN = -1; for ($x = 0; $x -lt $h.Count; $x++) { if ($h[$x] -match 'Race name|^Race$|Event') { $iN = $x; break } }
+    $iD = [array]::IndexOf($h, 'Date')
+    foreach ($r in ($sched | Select-Object -Skip 1)) {
+      if ($r[0] -notmatch '^\d+$') { continue }
+      $names += $(if ($iN -ge 0 -and $iN -lt $r.Count) { $r[$iN] } else { "Lauf $($r[0])" })
+      $d = $null
+      if ($iD -ge 0 -and $iD -lt $r.Count) { try { $d = ([datetime]::ParseExact("$($r[$iD] -replace '^[A-Za-z]+,\s*', '') $season", 'MMMM d yyyy', $Inv)).ToString('yyyy-MM-dd', $Inv) } catch {} }
+      $dates += $d
+    }
+  }
+  $tbl = Get-WikiTable $page 'Driver standings' '^Pos\.?\|Driver'
+  $results = @(); $standings = $null
+  if ($tbl) {
+    $results = Results-FromStandings $tbl $names 'INDYCAR' $season $dates 'Zielankunft laut Meisterschaftstabelle (Wikipedia)'
+    $standings = [ordered]@{ season = $season; tables = @(Standings-FromWiki $tbl 'Fahrer') }
+  }
+  return @{ events = $events; results = @($results); standings = $standings }
+}
+
+# ---------------------------------------------------------------- NASCAR Cup (cf.nascar.com)
+
+function Update-NASCAR {
+  $events = @(); $finished = @()
+  foreach ($s in @($Year, ($Year + 1))) {
+    try { $list = Get-Json "https://cf.nascar.com/cacher/$s/1/race_list_basic.json" } catch { continue }
+    foreach ($r in (Arr $list)) {
+      $sess = foreach ($x in (Arr $r.schedule | Where-Object { @(1, 2, 3) -contains [int]$_.run_type })) {
+        $st = Parse-Utc "$($x.start_time_utc)"
+        $type = @{ 1 = 'practice'; 2 = 'quali'; 3 = 'race' }[[int]$x.run_type]
+        $nm = @{ 1 = 'Training'; 2 = 'Qualifying'; 3 = 'Rennen' }[[int]$x.run_type]
+        $dur = @{ 1 = 50; 2 = 60; 3 = 210 }[[int]$x.run_type]
+        New-Session "nascar-$s-$($r.race_id)-$type-$($st.ToString('ddHHmm', $Inv))" $nm $type (To-Utc $st) (To-Utc $st.AddMinutes($dur))
+      }
+      $sess = @($sess | Sort-Object { $_.start })
+      $raceDay = "$($r.race_date)".Substring(0, 10)
+      if ($sess.Count) {
+        $start = ([TimeZoneInfo]::ConvertTime((Parse-Utc $sess[0].start), $Vienna)).ToString('yyyy-MM-dd', $Inv)
+        $end = ([TimeZoneInfo]::ConvertTime((Parse-Utc $sess[-1].start), $Vienna)).ToString('yyyy-MM-dd', $Inv)
+      } else { $start = $raceDay; $end = $raceDay; $sess = @(New-Session "nascar-$s-$($r.race_id)-race" 'Rennen (Startzeit folgt)' 'race' $raceDay $raceDay $true) }
+      $ev = New-Event 'NASCAR' $s "$($r.race_name)".Trim() $r.track_name '' $start $end $sess 'nascar.com'
+      $ev.id = "nascar-$s-$($r.race_id)"
+      $events += , $ev
+      if ($s -eq $Year -and [int]$r.winner_driver_id -gt 0) { $finished += , $r }
+    }
+  }
+  $results = @()
+  foreach ($r in $finished) {
+    try { $w = Get-Json "https://cf.nascar.com/cacher/$Year/1/$($r.race_id)/weekend-feed.json" } catch { continue }
+    Start-Sleep -Milliseconds 150
+    $res = Arr (Arr $w.weekend_race)[0].results
+    if (-not $res) { continue }
+    $quali = foreach ($x in ($res | Where-Object { [int]$_.qualifying_position -gt 0 } | Sort-Object { [int]$_.qualifying_position })) {
+      New-Row -pos $x.qualifying_position -no $x.car_number -driver $x.driver_fullname -team $x.team_name -car $x.car_make -best $(if ($x.qualifying_speed) { "$($x.qualifying_speed) mph" })
+    }
+    $race = foreach ($x in ($res | Sort-Object { [int]$_.finishing_position })) {
+      New-Row -pos $x.finishing_position -no $x.car_number -driver $x.driver_fullname -team $x.team_name -car $x.car_make -laps $x.laps_completed -grid $x.starting_position -pts $x.points_earned -status $(if ($x.finishing_status -ne 'Running') { $x.finishing_status })
+    }
+    $sess = @()
+    if (@($quali).Count) { $sess += , [ordered]@{ name = 'Qualifying'; type = 'quali'; rows = @($quali) } }
+    $sess += , [ordered]@{ name = 'Rennen'; type = 'race'; rows = @($race) }
+    $results += , [ordered]@{ id = "nascar-$Year-$($r.race_id)"; series = 'NASCAR'; season = $Year; name = $r.race_name; circuit = $r.track_name; date = "$($r.race_date)".Substring(0, 10); sessions = $sess }
+  }
+  $standings = $null
+  try {
+    $p = Get-Json "https://cf.nascar.com/cacher/$Year/1/points-feed.json"
+    $rows = foreach ($x in (Arr $p | Sort-Object { [int]$_.position })) { [ordered]@{ pos = "$($x.position)"; name = $x.driver_name; team = $x.manufacturer; pts = "$($x.points)"; wins = "$($x.wins)" } }
+    $standings = [ordered]@{ season = $Year; tables = @([ordered]@{ title = 'Fahrer'; rows = @($rows) }) }
+  } catch {}
+  return @{ events = $events; results = $results; standings = $standings }
+}
+
+# ---------------------------------------------------------------- MotoGP (Pulselive API)
+
+$MgpApi = 'https://api.motogp.pulselive.com/motogp/v1'
+
+function Strip-MgpSponsor([string]$n) {
+  # "PETRONAS GRAND PRIX OF MALAYSIA" -> "GRAND PRIX OF MALAYSIA"
+  $m = [regex]::Match($n.Trim(), '\b(GRAND PRIX|GRAN PREMI[O]?|GRANDE PR[EÉ]MIO)\b.*$', 'IgnoreCase')
+  if ($m.Success) { return $m.Value } else { return $n.Trim() }
+}
+
+function Update-MOTOGP {
+  $names = @{ FP1 = '1. Freies Training'; FP2 = '2. Freies Training'; PR = 'Practice'; Q1 = 'Qualifying 1'; Q2 = 'Qualifying 2'; SPR = 'Sprint'; WUP = 'Warm-up'; RAC = 'Rennen' }
+  $types = @{ FP1 = 'practice'; FP2 = 'practice'; PR = 'practice'; Q1 = 'quali'; Q2 = 'quali'; SPR = 'sprint'; WUP = 'practice'; RAC = 'race' }
+  $events = @()
+  foreach ($s in @($Year, ($Year + 1))) {
+    try { $list = Get-Json "$MgpApi/events?seasonYear=$s" } catch { continue }
+    foreach ($e in (Arr $list)) {
+      if ($e.kind -ne 'GP' -or -not $e.date_start) { continue }
+      $name = TitleCase (Strip-MgpSponsor $e.name)
+      $sess = foreach ($b in (Arr $e.broadcasts | Where-Object { $_.type -eq 'SESSION' -and $_.category.acronym -eq 'MGP' -and $names.ContainsKey($_.shortname) })) {
+        $st = [DateTimeOffset]::Parse((Fix-Offset $b.date_start), $Inv); $en = [DateTimeOffset]::Parse((Fix-Offset $b.date_end), $Inv)
+        New-Session "motogp-$s-$(Slug $name)-$($b.shortname.ToLowerInvariant())" $names[$b.shortname] $types[$b.shortname] (To-Utc $st) (To-Utc $en)
+      }
+      $country = if ($e.circuit) { $e.circuit.country } else { '' }
+      $circuit = if ($e.circuit) { $e.circuit.name } else { $name }
+      $ev = New-Event 'MOTOGP' $s $name $circuit $country "$($e.date_start)".Substring(0, 10) "$($e.date_end)".Substring(0, 10) @($sess | Sort-Object { $_.start }) 'motogp.com'
+      $events += , $ev
+    }
+  }
+
+  $seasons = Arr (Get-Json "$MgpApi/results/seasons")
+  $cur = $seasons | Where-Object { $_.current } | Select-Object -First 1
+  $cats = Arr (Get-Json "$MgpApi/results/categories?seasonUuid=$($cur.id)")
+  $cat = ($cats | Where-Object { $_.name -match '^MotoGP' } | Select-Object -First 1).id
+  $evs = Arr (Get-Json "$MgpApi/results/events?seasonUuid=$($cur.id)&isFinished=true") | Where-Object { -not $_.test } | Sort-Object { $_.date_start }
+  $results = @()
+  foreach ($e in $evs) {
+    $ss = Arr (Get-Json "$MgpApi/results/sessions?eventUuid=$($e.id)&categoryUuid=$cat")
+    Start-Sleep -Milliseconds 150
+    $sessions = @()
+    foreach ($s in ($ss | Where-Object { @('Q', 'SPR', 'RAC') -contains $_.type -and $_.status -ne 'CANCELLED' } | Sort-Object { $_.date })) {
+      try { $c = Get-Json "$MgpApi/results/session/$($s.id)/classification?test=false" } catch { continue }
+      Start-Sleep -Milliseconds 150
+      $isQ = $s.type -eq 'Q'
+      $rows = foreach ($x in (Arr $c.classification)) {
+        $gap = if ($x.gap -and $x.gap.first -and $x.gap.first -ne '0.000') { "+$($x.gap.first)" } else { $null }
+        if ($isQ) {
+          New-Row -pos $x.position -no $x.rider.number -driver $x.rider.full_name -team $x.team.name -car $x.constructor.name -best $x.best_lap.time -gap $gap -laps $x.total_laps
+        } else {
+          New-Row -pos $x.position -no $x.rider.number -driver $x.rider.full_name -team $x.team.name -car $x.constructor.name -laps $x.total_laps -time $x.time -gap $gap -pts $(if ($x.points) { $x.points }) -status $(if (-not $x.position) { $x.status })
+        }
+      }
+      if (-not @($rows).Count) { continue }
+      $label = switch ($s.type) { 'Q' { "Qualifying $($s.number)" } 'SPR' { 'Sprint' } default { 'Rennen' } }
+      $sessions += , [ordered]@{ name = $label; type = $(if ($isQ) { 'quali' } elseif ($s.type -eq 'SPR') { 'sprint' } else { 'race' }); rows = @($rows) }
+    }
+    if (-not $sessions.Count) { continue }
+    $nm = TitleCase (Strip-MgpSponsor $e.name)
+    $results += , [ordered]@{ id = "motogp-$($cur.year)-$(Slug $nm)"; series = 'MOTOGP'; season = [int]$cur.year; name = $nm; circuit = $(if ($e.circuit) { $e.circuit.name } else { $nm }); date = "$($e.date_end)".Substring(0, 10); sessions = $sessions }
+  }
+
+  $standings = $null
+  $st = Get-Json "$MgpApi/results/standings?seasonUuid=$($cur.id)&categoryUuid=$cat"
+  $rows = foreach ($x in (Arr $st.classification)) { [ordered]@{ pos = "$($x.position)"; name = $x.rider.full_name; team = $x.team.name; pts = "$($x.points)"; wins = "$($x.race_wins)" } }
+  if (@($rows).Count) { $standings = [ordered]@{ season = [int]$cur.year; tables = @([ordered]@{ title = 'Fahrer'; rows = @($rows) }) } }
+  return @{ events = $events; results = $results; standings = $standings }
+}
+
 # ---------------------------------------------------------------- Seeds & manuelle Session-Zeiten
 
 function Merge-Seeds($events, $seedEvents) {
@@ -693,6 +1148,8 @@ function Write-Ics($events, [string]$calName, [string]$path) {
 }
 
 # ---------------------------------------------------------------- Main
+
+if ($LibOnly) { return }
 
 $dataDir = Join-Path $Root 'data'
 $oldEvents = Read-JsonFile (Join-Path $dataDir 'events.json')
