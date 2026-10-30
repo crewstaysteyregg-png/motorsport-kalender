@@ -1,0 +1,15 @@
+{
+  "name": "Motorsport Kalender",
+  "short_name": "Motorsport",
+  "description": "Termine, Ergebnisse und Meisterschaftsstände für F1, DTM, IMSA und GT World Challenge Europe.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0b0c",
+  "theme_color": "#0b0b0c",
+  "icons": [
+    { "src": "assets/icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

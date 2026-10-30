@@ -1,0 +1,133 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Motorsport-Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Motorsport · GT World Challenge Europe
+X-WR-TIMEZONE:Europe/Vienna
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VEVENT
+UID:gtwc-2026-portimao-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20261014
+DTEND;VALUE=DATE:20261019
+SUMMARY:GTWC · Portimao · Rennwochenende
+LOCATION:Portimao\, Portugal
+DESCRIPTION:GT World Challenge Europe\nPortimao\nZeiten ohne Gewähr. Quell
+ e: gt-world-challenge-europe.com
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-circuit-paul-ricard-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270416
+DTEND;VALUE=DATE:20270419
+SUMMARY:GTWC · Circuit Paul Ricard · Rennwochenende
+LOCATION:Circuit Paul Ricard\, Le Castellet\, Frankreich
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nCircuit Paul Ricar
+ d\nZeiten ohne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfass
+ t)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-brands-hatch-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270430
+DTEND;VALUE=DATE:20270503
+SUMMARY:GTWC · Brands Hatch · Rennwochenende
+LOCATION:Brands Hatch\, Kent\, Großbritannien
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nBrands Hatch\nZeiten 
+ ohne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-imola-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270521
+DTEND;VALUE=DATE:20270524
+SUMMARY:GTWC · Imola · Rennwochenende
+LOCATION:Autodromo Enzo e Dino Ferrari\, Imola\, Italien
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nImola\nZeiten ohne
+  Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-crowdstrike-24-hours-of-spa-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270623
+DTEND;VALUE=DATE:20270628
+SUMMARY:GTWC · CrowdStrike 24 Hours of Spa · Rennwochenende
+LOCATION:Circuit de Spa-Francorchamps\, Spa\, Belgien
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nCrowdStrike 24 Hou
+ rs of Spa\nZeiten ohne Gewähr. Quelle: Offizieller Saisonkalender (manuel
+ l erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-misano-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270716
+DTEND;VALUE=DATE:20270719
+SUMMARY:GTWC · Misano · Rennwochenende
+LOCATION:Misano World Circuit\, Misano Adriatico\, Italien
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nMisano\nZeiten ohne G
+ ewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-magny-cours-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270730
+DTEND;VALUE=DATE:20270802
+SUMMARY:GTWC · Magny-Cours · Rennwochenende
+LOCATION:Circuit de Nevers Magny-Cours\, Magny-Cours\, Frankreich
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nMagny-Cours\nZeiten o
+ hne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-nurburgring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270827
+DTEND;VALUE=DATE:20270830
+SUMMARY:GTWC · Nürburgring · Rennwochenende
+LOCATION:Nürburgring\, Nürburg\, Deutschland
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nNürburgring\nZeit
+ en ohne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-zandvoort-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270917
+DTEND;VALUE=DATE:20270920
+SUMMARY:GTWC · Zandvoort · Rennwochenende
+LOCATION:Circuit Zandvoort\, Zandvoort\, Niederlande
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nZandvoort\nZeiten ohn
+ e Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-hungaroring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271004
+SUMMARY:GTWC · Hungaroring · Rennwochenende
+LOCATION:Hungaroring\, Budapest\, Ungarn
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nHungaroring\nZeiten o
+ hne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-barcelona-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271022
+DTEND;VALUE=DATE:20271025
+SUMMARY:GTWC · Barcelona · Rennwochenende
+LOCATION:Circuit de Barcelona-Catalunya\, Montmeló\, Spanien
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nBarcelona\nZeiten 
+ ohne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+END:VCALENDAR

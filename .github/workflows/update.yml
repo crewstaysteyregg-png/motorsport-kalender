@@ -1,0 +1,61 @@
+name: Termine aktualisieren & veröffentlichen
+
+on:
+  schedule:
+    # Wiener Zeit ca. 06:15, 12:15, 18:15 und 00:15 (UTC +1/+2)
+    - cron: '15 4,10,16,22 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'data/events.json'
+      - 'data/meta.json'
+      - 'data/standings.json'
+      - 'data/results/**'
+      - 'calendar/**'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: update-and-deploy
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Daten holen
+        shell: pwsh
+        run: ./scripts/update.ps1
+
+      - name: Änderungen speichern
+        run: |
+          git config user.name "motorsport-bot"
+          git config user.email "motorsport-bot@users.noreply.github.com"
+          git add data calendar
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."
+          else
+            git commit -m "Termine & Ergebnisse aktualisiert"
+            git push
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: update
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,4 @@
+{
+  "_info": "Optionale Session-Zeiten für Serien ohne maschinenlesbaren Zeitplan (DTM/IMSA/GTWC vor dem Wochenende). 'event' = beliebiges Datum innerhalb des Rennwochenendes. Zeiten mit Zeitzone angeben. Beispiel siehe README.",
+  "overrides": []
+}

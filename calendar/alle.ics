@@ -1,0 +1,930 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Motorsport-Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Motorsport (alle Serien)
+X-WR-TIMEZONE:Europe/Vienna
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VEVENT
+UID:gtwc-2026-portimao-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20261014
+DTEND;VALUE=DATE:20261019
+SUMMARY:GTWC · Portimao · Rennwochenende
+LOCATION:Portimao\, Portugal
+DESCRIPTION:GT World Challenge Europe\nPortimao\nZeiten ohne Gewähr. Quell
+ e: gt-world-challenge-europe.com
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-18-practice1@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261023T173000Z
+DTEND:20261023T183000Z
+SUMMARY:F1 · United States Grand Prix · 1. Freies Training
+LOCATION:Circuit of the Americas\, Austin\, USA
+DESCRIPTION:Formel 1\nUnited States Grand Prix\nZeiten ohne Gewähr. Quelle
+ : Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-18-practice2@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261023T210000Z
+DTEND:20261023T220000Z
+SUMMARY:F1 · United States Grand Prix · 2. Freies Training
+LOCATION:Circuit of the Americas\, Austin\, USA
+DESCRIPTION:Formel 1\nUnited States Grand Prix\nZeiten ohne Gewähr. Quelle
+ : Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-18-practice3@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261024T173000Z
+DTEND:20261024T183000Z
+SUMMARY:F1 · United States Grand Prix · 3. Freies Training
+LOCATION:Circuit of the Americas\, Austin\, USA
+DESCRIPTION:Formel 1\nUnited States Grand Prix\nZeiten ohne Gewähr. Quelle
+ : Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-18-quali@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261024T210000Z
+DTEND:20261024T220000Z
+SUMMARY:F1 · United States Grand Prix · Qualifying
+LOCATION:Circuit of the Americas\, Austin\, USA
+DESCRIPTION:Formel 1\nUnited States Grand Prix\nZeiten ohne Gewähr. Quelle
+ : Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-18-race@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261025T200000Z
+DTEND:20261025T220000Z
+SUMMARY:F1 · United States Grand Prix · Rennen
+LOCATION:Circuit of the Americas\, Austin\, USA
+DESCRIPTION:Formel 1\nUnited States Grand Prix\nZeiten ohne Gewähr. Quelle
+ : Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-19-practice1@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261030T183000Z
+DTEND:20261030T193000Z
+SUMMARY:F1 · Mexico City Grand Prix · 1. Freies Training
+LOCATION:Autódromo Hermanos Rodríguez\, Mexico City\, Mexico
+DESCRIPTION:Formel 1\nMexico City Grand Prix\nZeiten ohne Gewähr. Quelle: 
+ Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-19-practice2@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261030T220000Z
+DTEND:20261030T230000Z
+SUMMARY:F1 · Mexico City Grand Prix · 2. Freies Training
+LOCATION:Autódromo Hermanos Rodríguez\, Mexico City\, Mexico
+DESCRIPTION:Formel 1\nMexico City Grand Prix\nZeiten ohne Gewähr. Quelle: 
+ Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-19-practice3@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261031T173000Z
+DTEND:20261031T183000Z
+SUMMARY:F1 · Mexico City Grand Prix · 3. Freies Training
+LOCATION:Autódromo Hermanos Rodríguez\, Mexico City\, Mexico
+DESCRIPTION:Formel 1\nMexico City Grand Prix\nZeiten ohne Gewähr. Quelle: 
+ Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-19-quali@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261031T210000Z
+DTEND:20261031T220000Z
+SUMMARY:F1 · Mexico City Grand Prix · Qualifying
+LOCATION:Autódromo Hermanos Rodríguez\, Mexico City\, Mexico
+DESCRIPTION:Formel 1\nMexico City Grand Prix\nZeiten ohne Gewähr. Quelle: 
+ Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-19-race@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261101T200000Z
+DTEND:20261101T220000Z
+SUMMARY:F1 · Mexico City Grand Prix · Rennen
+LOCATION:Autódromo Hermanos Rodríguez\, Mexico City\, Mexico
+DESCRIPTION:Formel 1\nMexico City Grand Prix\nZeiten ohne Gewähr. Quelle: 
+ Jolpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-20-practice1@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261106T153000Z
+DTEND:20261106T163000Z
+SUMMARY:F1 · Brazilian Grand Prix · 1. Freies Training
+LOCATION:Autódromo José Carlos Pace\, São Paulo\, Brazil
+DESCRIPTION:Formel 1\nBrazilian Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-20-practice2@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261106T190000Z
+DTEND:20261106T200000Z
+SUMMARY:F1 · Brazilian Grand Prix · 2. Freies Training
+LOCATION:Autódromo José Carlos Pace\, São Paulo\, Brazil
+DESCRIPTION:Formel 1\nBrazilian Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-20-practice3@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261107T143000Z
+DTEND:20261107T153000Z
+SUMMARY:F1 · Brazilian Grand Prix · 3. Freies Training
+LOCATION:Autódromo José Carlos Pace\, São Paulo\, Brazil
+DESCRIPTION:Formel 1\nBrazilian Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-20-quali@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261107T180000Z
+DTEND:20261107T190000Z
+SUMMARY:F1 · Brazilian Grand Prix · Qualifying
+LOCATION:Autódromo José Carlos Pace\, São Paulo\, Brazil
+DESCRIPTION:Formel 1\nBrazilian Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-20-race@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261108T170000Z
+DTEND:20261108T190000Z
+SUMMARY:F1 · Brazilian Grand Prix · Rennen
+LOCATION:Autódromo José Carlos Pace\, São Paulo\, Brazil
+DESCRIPTION:Formel 1\nBrazilian Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-21-practice1@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261120T003000Z
+DTEND:20261120T013000Z
+SUMMARY:F1 · Las Vegas Grand Prix · 1. Freies Training
+LOCATION:Las Vegas Strip Street Circuit\, Las Vegas\, USA
+DESCRIPTION:Formel 1\nLas Vegas Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-21-practice2@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261120T040000Z
+DTEND:20261120T050000Z
+SUMMARY:F1 · Las Vegas Grand Prix · 2. Freies Training
+LOCATION:Las Vegas Strip Street Circuit\, Las Vegas\, USA
+DESCRIPTION:Formel 1\nLas Vegas Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-21-practice3@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261121T003000Z
+DTEND:20261121T013000Z
+SUMMARY:F1 · Las Vegas Grand Prix · 3. Freies Training
+LOCATION:Las Vegas Strip Street Circuit\, Las Vegas\, USA
+DESCRIPTION:Formel 1\nLas Vegas Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-21-quali@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261121T040000Z
+DTEND:20261121T050000Z
+SUMMARY:F1 · Las Vegas Grand Prix · Qualifying
+LOCATION:Las Vegas Strip Street Circuit\, Las Vegas\, USA
+DESCRIPTION:Formel 1\nLas Vegas Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-21-race@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261122T040000Z
+DTEND:20261122T060000Z
+SUMMARY:F1 · Las Vegas Grand Prix · Rennen
+LOCATION:Las Vegas Strip Street Circuit\, Las Vegas\, USA
+DESCRIPTION:Formel 1\nLas Vegas Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-22-practice1@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261127T133000Z
+DTEND:20261127T143000Z
+SUMMARY:F1 · Qatar Grand Prix · 1. Freies Training
+LOCATION:Lusail International Circuit\, Lusail\, Qatar
+DESCRIPTION:Formel 1\nQatar Grand Prix\nZeiten ohne Gewähr. Quelle: Jolpic
+ a F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-22-practice2@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261127T170000Z
+DTEND:20261127T180000Z
+SUMMARY:F1 · Qatar Grand Prix · 2. Freies Training
+LOCATION:Lusail International Circuit\, Lusail\, Qatar
+DESCRIPTION:Formel 1\nQatar Grand Prix\nZeiten ohne Gewähr. Quelle: Jolpic
+ a F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-22-practice3@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261128T143000Z
+DTEND:20261128T153000Z
+SUMMARY:F1 · Qatar Grand Prix · 3. Freies Training
+LOCATION:Lusail International Circuit\, Lusail\, Qatar
+DESCRIPTION:Formel 1\nQatar Grand Prix\nZeiten ohne Gewähr. Quelle: Jolpic
+ a F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-22-quali@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261128T180000Z
+DTEND:20261128T190000Z
+SUMMARY:F1 · Qatar Grand Prix · Qualifying
+LOCATION:Lusail International Circuit\, Lusail\, Qatar
+DESCRIPTION:Formel 1\nQatar Grand Prix\nZeiten ohne Gewähr. Quelle: Jolpic
+ a F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-22-race@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261129T160000Z
+DTEND:20261129T180000Z
+SUMMARY:F1 · Qatar Grand Prix · Rennen
+LOCATION:Lusail International Circuit\, Lusail\, Qatar
+DESCRIPTION:Formel 1\nQatar Grand Prix\nZeiten ohne Gewähr. Quelle: Jolpic
+ a F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-23-practice1@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261204T093000Z
+DTEND:20261204T103000Z
+SUMMARY:F1 · Abu Dhabi Grand Prix · 1. Freies Training
+LOCATION:Yas Marina Circuit\, Abu Dhabi\, UAE
+DESCRIPTION:Formel 1\nAbu Dhabi Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-23-practice2@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261204T130000Z
+DTEND:20261204T140000Z
+SUMMARY:F1 · Abu Dhabi Grand Prix · 2. Freies Training
+LOCATION:Yas Marina Circuit\, Abu Dhabi\, UAE
+DESCRIPTION:Formel 1\nAbu Dhabi Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-23-practice3@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261205T103000Z
+DTEND:20261205T113000Z
+SUMMARY:F1 · Abu Dhabi Grand Prix · 3. Freies Training
+LOCATION:Yas Marina Circuit\, Abu Dhabi\, UAE
+DESCRIPTION:Formel 1\nAbu Dhabi Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-23-quali@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261205T140000Z
+DTEND:20261205T150000Z
+SUMMARY:F1 · Abu Dhabi Grand Prix · Qualifying
+LOCATION:Yas Marina Circuit\, Abu Dhabi\, UAE
+DESCRIPTION:Formel 1\nAbu Dhabi Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2026-23-race@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART:20261206T130000Z
+DTEND:20261206T150000Z
+SUMMARY:F1 · Abu Dhabi Grand Prix · Rennen
+LOCATION:Yas Marina Circuit\, Abu Dhabi\, UAE
+DESCRIPTION:Formel 1\nAbu Dhabi Grand Prix\nZeiten ohne Gewähr. Quelle: Jo
+ lpica F1 API
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-rolex-24-at-daytona-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270128
+DTEND;VALUE=DATE:20270201
+SUMMARY:IMSA · Rolex 24 At Daytona · Rennwochenende
+LOCATION:Daytona International Speedway\, Daytona Beach\, USA
+DESCRIPTION:IMSA WeatherTech\nRolex 24 At Daytona\nZeiten ohne Gewähr. Que
+ lle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-bahrain-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270312
+DTEND;VALUE=DATE:20270315
+SUMMARY:F1 · Bahrain Grand Prix · Rennwochenende
+LOCATION:Bahrain International Circuit\, Sakhir\, Bahrain
+DESCRIPTION:Formel 1\nBahrain Grand Prix\nZeiten ohne Gewähr. Quelle: Offi
+ zieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-mobil-1-twelve-hours-of-sebring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270317
+DTEND;VALUE=DATE:20270321
+SUMMARY:IMSA · Mobil 1 Twelve Hours of Sebring · Rennwochenende
+LOCATION:Sebring International Raceway\, Sebring\, USA
+DESCRIPTION:IMSA WeatherTech\nMobil 1 Twelve Hours of Sebring\nZeiten ohne 
+ Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-saudi-arabian-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270319
+DTEND;VALUE=DATE:20270322
+SUMMARY:F1 · Saudi Arabian Grand Prix · Rennwochenende
+LOCATION:Jeddah Corniche Circuit\, Jeddah\, Saudi-Arabien
+DESCRIPTION:Formel 1\nSaudi Arabian Grand Prix\nZeiten ohne Gewähr. Quelle
+ : Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-australian-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270402
+DTEND;VALUE=DATE:20270405
+SUMMARY:F1 · Australian Grand Prix · Rennwochenende
+LOCATION:Albert Park Grand Prix Circuit\, Melbourne\, Australien
+DESCRIPTION:Formel 1\nAustralian Grand Prix\nZeiten ohne Gewähr. Quelle: O
+ ffizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-japanese-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270409
+DTEND;VALUE=DATE:20270412
+SUMMARY:F1 · Japanese Grand Prix · Rennwochenende
+LOCATION:Suzuka Circuit\, Suzuka\, Japan
+DESCRIPTION:Formel 1\nJapanese Grand Prix\nZeiten ohne Gewähr. Quelle: Off
+ izieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-chinese-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270416
+DTEND;VALUE=DATE:20270419
+SUMMARY:F1 · Chinese Grand Prix · Rennwochenende
+LOCATION:Shanghai International Circuit\, Shanghai\, China
+DESCRIPTION:Formel 1\nChinese Grand Prix\nZeiten ohne Gewähr. Quelle: Offi
+ zieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-circuit-paul-ricard-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270416
+DTEND;VALUE=DATE:20270419
+SUMMARY:GTWC · Circuit Paul Ricard · Rennwochenende
+LOCATION:Circuit Paul Ricard\, Le Castellet\, Frankreich
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nCircuit Paul Ricar
+ d\nZeiten ohne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfass
+ t)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-acura-grand-prix-of-long-beach-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270416
+DTEND;VALUE=DATE:20270418
+SUMMARY:IMSA · Acura Grand Prix of Long Beach · Rennwochenende
+LOCATION:Long Beach Street Circuit\, Long Beach\, USA
+DESCRIPTION:IMSA WeatherTech\nAcura Grand Prix of Long Beach\nZeiten ohne G
+ ewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:dtm-2027-red-bull-ring-by-vkb-bank-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270423
+DTEND;VALUE=DATE:20270426
+SUMMARY:DTM · Red Bull Ring by VKB-Bank · Rennwochenende
+LOCATION:Red Bull Ring by VKB-Bank\, Austria
+DESCRIPTION:DTM\nRed Bull Ring by VKB-Bank\nZeiten ohne Gewähr. Quelle: dt
+ m.com
+CATEGORIES:DTM
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-miami-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270430
+DTEND;VALUE=DATE:20270503
+SUMMARY:F1 · Miami Grand Prix · Rennwochenende
+LOCATION:Miami International Autodrome\, Miami\, USA
+DESCRIPTION:Formel 1\nMiami Grand Prix\nZeiten ohne Gewähr. Quelle: Offizi
+ eller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-brands-hatch-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270430
+DTEND;VALUE=DATE:20270503
+SUMMARY:GTWC · Brands Hatch · Rennwochenende
+LOCATION:Brands Hatch\, Kent\, Großbritannien
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nBrands Hatch\nZeiten 
+ ohne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-monterey-sportscar-championship-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270430
+DTEND;VALUE=DATE:20270503
+SUMMARY:IMSA · Monterey SportsCar Championship · Rennwochenende
+LOCATION:WeatherTech Raceway Laguna Seca\, Monterey\, USA
+DESCRIPTION:IMSA WeatherTech\nMonterey SportsCar Championship\nZeiten ohne 
+ Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:dtm-2027-motorsport-arena-oschersleben-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270507
+DTEND;VALUE=DATE:20270510
+SUMMARY:DTM · Motorsport Arena Oschersleben · Rennwochenende
+LOCATION:Motorsport Arena Oschersleben\, Germany
+DESCRIPTION:DTM\nMotorsport Arena Oschersleben\nZeiten ohne Gewähr. Quelle
+ : dtm.com
+CATEGORIES:DTM
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-canadian-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270521
+DTEND;VALUE=DATE:20270524
+SUMMARY:F1 · Canadian Grand Prix · Rennwochenende
+LOCATION:Circuit Gilles Villeneuve\, Montreal\, Kanada
+DESCRIPTION:Formel 1\nCanadian Grand Prix\nZeiten ohne Gewähr. Quelle: Off
+ izieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-imola-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270521
+DTEND;VALUE=DATE:20270524
+SUMMARY:GTWC · Imola · Rennwochenende
+LOCATION:Autodromo Enzo e Dino Ferrari\, Imola\, Italien
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nImola\nZeiten ohne
+  Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-monaco-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270604
+DTEND;VALUE=DATE:20270607
+SUMMARY:F1 · Monaco Grand Prix · Rennwochenende
+LOCATION:Circuit de Monaco\, Monte Carlo\, Monaco
+DESCRIPTION:Formel 1\nMonaco Grand Prix\nZeiten ohne Gewähr. Quelle: Offiz
+ ieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-chevrolet-detroit-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270604
+DTEND;VALUE=DATE:20270606
+SUMMARY:IMSA · Chevrolet Detroit Grand Prix · Rennwochenende
+LOCATION:Detroit Street Circuit\, Detroit\, USA
+DESCRIPTION:IMSA WeatherTech\nChevrolet Detroit Grand Prix\nZeiten ohne Gew
+ ähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:dtm-2027-dekra-lausitzring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270618
+DTEND;VALUE=DATE:20270621
+SUMMARY:DTM · Dekra Lausitzring · Rennwochenende
+LOCATION:Dekra Lausitzring\, Germany
+DESCRIPTION:DTM\nDekra Lausitzring\nZeiten ohne Gewähr. Quelle: dtm.com
+CATEGORIES:DTM
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-portuguese-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270618
+DTEND;VALUE=DATE:20270621
+SUMMARY:F1 · Portuguese Grand Prix · Rennwochenende
+LOCATION:Autódromo Internacional do Algarve\, Portimão\, Portugal
+DESCRIPTION:Formel 1\nPortuguese Grand Prix\nZeiten ohne Gewähr. Quelle: O
+ ffizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-crowdstrike-24-hours-of-spa-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270623
+DTEND;VALUE=DATE:20270628
+SUMMARY:GTWC · CrowdStrike 24 Hours of Spa · Rennwochenende
+LOCATION:Circuit de Spa-Francorchamps\, Spa\, Belgien
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nCrowdStrike 24 Hou
+ rs of Spa\nZeiten ohne Gewähr. Quelle: Offizieller Saisonkalender (manuel
+ l erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-sahlen-s-six-hours-of-the-glen-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270624
+DTEND;VALUE=DATE:20270628
+SUMMARY:IMSA · Sahlen's Six Hours of The Glen · Rennwochenende
+LOCATION:Watkins Glen International\, Watkins Glen\, USA
+DESCRIPTION:IMSA WeatherTech\nSahlen's Six Hours of The Glen\nZeiten ohne G
+ ewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:dtm-2027-norisring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270702
+DTEND;VALUE=DATE:20270705
+SUMMARY:DTM · Norisring · Rennwochenende
+LOCATION:Norisring\, Germany
+DESCRIPTION:DTM\nNorisring\nZeiten ohne Gewähr. Quelle: dtm.com
+CATEGORIES:DTM
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-british-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270702
+DTEND;VALUE=DATE:20270705
+SUMMARY:F1 · British Grand Prix · Rennwochenende
+LOCATION:Silverstone Circuit\, Silverstone\, Großbritannien
+DESCRIPTION:Formel 1\nBritish Grand Prix\nZeiten ohne Gewähr. Quelle: Offi
+ zieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-austrian-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270709
+DTEND;VALUE=DATE:20270712
+SUMMARY:F1 · Austrian Grand Prix · Rennwochenende
+LOCATION:Red Bull Ring\, Spielberg\, Österreich
+DESCRIPTION:Formel 1\nAustrian Grand Prix\nZeiten ohne Gewähr. Quelle: Off
+ izieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-chevrolet-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270709
+DTEND;VALUE=DATE:20270712
+SUMMARY:IMSA · Chevrolet Grand Prix · Rennwochenende
+LOCATION:Canadian Tire Motorsport Park\, Bowmanville\, Kanada
+DESCRIPTION:IMSA WeatherTech\nChevrolet Grand Prix\nZeiten ohne Gewähr. Qu
+ elle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-misano-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270716
+DTEND;VALUE=DATE:20270719
+SUMMARY:GTWC · Misano · Rennwochenende
+LOCATION:Misano World Circuit\, Misano Adriatico\, Italien
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nMisano\nZeiten ohne G
+ ewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-belgian-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270723
+DTEND;VALUE=DATE:20270726
+SUMMARY:F1 · Belgian Grand Prix · Rennwochenende
+LOCATION:Circuit de Spa-Francorchamps\, Spa\, Belgien
+DESCRIPTION:Formel 1\nBelgian Grand Prix\nZeiten ohne Gewähr. Quelle: Offi
+ zieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-imsa-sportscar-weekend-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270729
+DTEND;VALUE=DATE:20270802
+SUMMARY:IMSA · IMSA SportsCar Weekend · Rennwochenende
+LOCATION:Road America\, Elkhart Lake\, USA
+DESCRIPTION:IMSA WeatherTech\nIMSA SportsCar Weekend\nZeiten ohne Gewähr. 
+ Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-hungarian-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270730
+DTEND;VALUE=DATE:20270802
+SUMMARY:F1 · Hungarian Grand Prix · Rennwochenende
+LOCATION:Hungaroring\, Budapest\, Ungarn
+DESCRIPTION:Formel 1\nHungarian Grand Prix\nZeiten ohne Gewähr. Quelle: Of
+ fizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-magny-cours-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270730
+DTEND;VALUE=DATE:20270802
+SUMMARY:GTWC · Magny-Cours · Rennwochenende
+LOCATION:Circuit de Nevers Magny-Cours\, Magny-Cours\, Frankreich
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nMagny-Cours\nZeiten o
+ hne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:dtm-2027-circuit-zandvoort-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270806
+DTEND;VALUE=DATE:20270809
+SUMMARY:DTM · Circuit Zandvoort · Rennwochenende
+LOCATION:Circuit Zandvoort\, Netherlands
+DESCRIPTION:DTM\nCircuit Zandvoort\nZeiten ohne Gewähr. Quelle: dtm.com
+CATEGORIES:DTM
+END:VEVENT
+BEGIN:VEVENT
+UID:dtm-2027-nurburgring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270820
+DTEND;VALUE=DATE:20270823
+SUMMARY:DTM · Nürburgring · Rennwochenende
+LOCATION:Nürburgring\, Germany
+DESCRIPTION:DTM\nNürburgring\nZeiten ohne Gewähr. Quelle: dtm.com
+CATEGORIES:DTM
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-michelin-gt-challenge-at-vir-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270820
+DTEND;VALUE=DATE:20270823
+SUMMARY:IMSA · Michelin GT Challenge at VIR · Rennwochenende
+LOCATION:VIRginia International Raceway\, Alton\, USA
+DESCRIPTION:IMSA WeatherTech\nMichelin GT Challenge at VIR\nZeiten ohne Gew
+ ähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-nurburgring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270827
+DTEND;VALUE=DATE:20270830
+SUMMARY:GTWC · Nürburgring · Rennwochenende
+LOCATION:Nürburgring\, Nürburg\, Deutschland
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nNürburgring\nZeit
+ en ohne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-italian-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270903
+DTEND;VALUE=DATE:20270906
+SUMMARY:F1 · Italian Grand Prix · Rennwochenende
+LOCATION:Autodromo Nazionale di Monza\, Monza\, Italien
+DESCRIPTION:Formel 1\nItalian Grand Prix\nZeiten ohne Gewähr. Quelle: Offi
+ zieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-spanish-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270910
+DTEND;VALUE=DATE:20270913
+SUMMARY:F1 · Spanish Grand Prix · Rennwochenende
+LOCATION:Madring\, Madrid\, Spanien
+DESCRIPTION:Formel 1\nSpanish Grand Prix\nZeiten ohne Gewähr. Quelle: Offi
+ zieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-zandvoort-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270917
+DTEND;VALUE=DATE:20270920
+SUMMARY:GTWC · Zandvoort · Rennwochenende
+LOCATION:Circuit Zandvoort\, Zandvoort\, Niederlande
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nZandvoort\nZeiten ohn
+ e Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-tirerack-com-battle-on-the-bricks-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270917
+DTEND;VALUE=DATE:20270920
+SUMMARY:IMSA · TireRack.com Battle on the Bricks · Rennwochenende
+LOCATION:Indianapolis Motor Speedway\, Indianapolis\, USA
+DESCRIPTION:IMSA WeatherTech\nTireRack.com Battle on the Bricks\nZeiten ohn
+ e Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:dtm-2027-sachsenring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270924
+DTEND;VALUE=DATE:20270927
+SUMMARY:DTM · Sachsenring · Rennwochenende
+LOCATION:Sachsenring\, Germany
+DESCRIPTION:DTM\nSachsenring\nZeiten ohne Gewähr. Quelle: dtm.com
+CATEGORIES:DTM
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-azerbaijan-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270924
+DTEND;VALUE=DATE:20270927
+SUMMARY:F1 · Azerbaijan Grand Prix · Rennwochenende
+LOCATION:Baku City Circuit\, Baku\, Aserbaidschan
+DESCRIPTION:Formel 1\nAzerbaijan Grand Prix\nZeiten ohne Gewähr. Quelle: O
+ ffizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-turkish-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271004
+SUMMARY:F1 · Turkish Grand Prix · Rennwochenende
+LOCATION:Istanbul Park\, Istanbul\, Türkei
+DESCRIPTION:Formel 1\nTurkish Grand Prix\nZeiten ohne Gewähr. Quelle: Offi
+ zieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-hungaroring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271001
+DTEND;VALUE=DATE:20271004
+SUMMARY:GTWC · Hungaroring · Rennwochenende
+LOCATION:Hungaroring\, Budapest\, Ungarn
+DESCRIPTION:GT World Challenge Europe – Sprint Cup\nHungaroring\nZeiten o
+ hne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-motul-petit-le-mans-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271006
+DTEND;VALUE=DATE:20271010
+SUMMARY:IMSA · Motul Petit Le Mans · Rennwochenende
+LOCATION:Michelin Raceway Road Atlanta\, Braselton\, USA
+DESCRIPTION:IMSA WeatherTech\nMotul Petit Le Mans\nZeiten ohne Gewähr. Que
+ lle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:dtm-2027-hockenheimring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271008
+DTEND;VALUE=DATE:20271011
+SUMMARY:DTM · Hockenheimring · Rennwochenende
+LOCATION:Hockenheimring\, Germany
+DESCRIPTION:DTM\nHockenheimring\nZeiten ohne Gewähr. Quelle: dtm.com
+CATEGORIES:DTM
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-singapore-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271008
+DTEND;VALUE=DATE:20271011
+SUMMARY:F1 · Singapore Grand Prix · Rennwochenende
+LOCATION:Marina Bay Street Circuit\, Singapur
+DESCRIPTION:Formel 1\nSingapore Grand Prix\nZeiten ohne Gewähr. Quelle: Of
+ fizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-united-states-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271022
+DTEND;VALUE=DATE:20271025
+SUMMARY:F1 · United States Grand Prix · Rennwochenende
+LOCATION:Circuit of the Americas\, Austin\, USA
+DESCRIPTION:Formel 1\nUnited States Grand Prix\nZeiten ohne Gewähr. Quelle
+ : Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:gtwc-2027-barcelona-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271022
+DTEND;VALUE=DATE:20271025
+SUMMARY:GTWC · Barcelona · Rennwochenende
+LOCATION:Circuit de Barcelona-Catalunya\, Montmeló\, Spanien
+DESCRIPTION:GT World Challenge Europe – Endurance Cup\nBarcelona\nZeiten 
+ ohne Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:GTWC
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-mexico-city-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271029
+DTEND;VALUE=DATE:20271101
+SUMMARY:F1 · Mexico City Grand Prix · Rennwochenende
+LOCATION:Autódromo Hermanos Rodríguez\, Mexiko-Stadt\, Mexiko
+DESCRIPTION:Formel 1\nMexico City Grand Prix\nZeiten ohne Gewähr. Quelle: 
+ Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-brazilian-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271105
+DTEND;VALUE=DATE:20271108
+SUMMARY:F1 · Brazilian Grand Prix · Rennwochenende
+LOCATION:Autódromo José Carlos Pace\, São Paulo\, Brasilien
+DESCRIPTION:Formel 1\nBrazilian Grand Prix\nZeiten ohne Gewähr. Quelle: Of
+ fizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-las-vegas-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271118
+DTEND;VALUE=DATE:20271121
+SUMMARY:F1 · Las Vegas Grand Prix · Rennwochenende
+LOCATION:Las Vegas Strip Street Circuit\, Las Vegas\, USA
+DESCRIPTION:Formel 1\nLas Vegas Grand Prix\nZeiten ohne Gewähr. Quelle: Of
+ fizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-qatar-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271203
+DTEND;VALUE=DATE:20271206
+SUMMARY:F1 · Qatar Grand Prix · Rennwochenende
+LOCATION:Lusail International Circuit\, Lusail\, Katar
+DESCRIPTION:Formel 1\nQatar Grand Prix\nZeiten ohne Gewähr. Quelle: Offizi
+ eller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+BEGIN:VEVENT
+UID:f1-2027-abu-dhabi-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271210
+DTEND;VALUE=DATE:20271213
+SUMMARY:F1 · Abu Dhabi Grand Prix · Rennwochenende
+LOCATION:Yas Marina Circuit\, Abu Dhabi\, VAE
+DESCRIPTION:Formel 1\nAbu Dhabi Grand Prix\nZeiten ohne Gewähr. Quelle: Of
+ fizieller Saisonkalender (manuell erfasst)
+CATEGORIES:F1
+END:VEVENT
+END:VCALENDAR

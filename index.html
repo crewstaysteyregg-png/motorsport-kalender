@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Motorsport Kalender</title>
+  <meta name="description" content="Termine, Ergebnisse und Meisterschaftsstände für Formel 1, DTM, IMSA und GT World Challenge Europe.">
+  <meta name="theme-color" content="#0b0b0c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Motorsport">
+  <link rel="apple-touch-icon" href="assets/icon-180.png">
+  <link rel="icon" type="image/png" href="assets/icon-180.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar carbon">
+    <div class="wrap topbar__inner">
+      <div class="brand">
+        <svg class="brand__flag" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="2" width="2" height="20" rx="1" fill="#c9ccd2"/>
+          <rect x="5" y="3" width="16" height="12" fill="#fff"/>
+          <path fill="#111" d="M5 3h4v4H5zM13 3h4v4h-4zM9 7h4v4H9zM17 7h4v4h-4zM5 11h4v4H5zM13 11h4v4h-4z"/>
+        </svg>
+        <div>
+          <h1 class="brand__title">Motorsport <span>Kalender</span></h1>
+          <p class="brand__sub">F1 · DTM · IMSA · GT World Challenge</p>
+        </div>
+      </div>
+      <p class="updated" id="updated">Lade Daten …</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <nav class="filters" id="filters" aria-label="Serien filtern"></nav>
+
+    <section class="hero carbon-soft" id="hero" aria-live="polite">
+      <div class="hero__head">
+        <span class="eyebrow">Race Countdown</span>
+        <div class="seg" role="tablist" aria-label="Countdown-Ziel">
+          <button class="seg__btn is-on" data-target="session">Nächste Session</button>
+          <button class="seg__btn" data-target="race">Nächstes Rennen</button>
+        </div>
+      </div>
+      <div class="hero__body" id="heroBody"></div>
+    </section>
+
+    <nav class="tabs" id="tabs" aria-label="Ansichten">
+      <button class="tab is-on" data-view="list">Termine</button>
+      <button class="tab" data-view="month">Kalender</button>
+      <button class="tab" data-view="results">Ergebnisse</button>
+      <button class="tab" data-view="standings">Meisterschaft</button>
+      <button class="tab" data-view="sync">Abo &amp; Widget</button>
+    </nav>
+
+    <section class="view" id="view-list"></section>
+    <section class="view" id="view-month" hidden></section>
+    <section class="view" id="view-results" hidden></section>
+    <section class="view" id="view-standings" hidden></section>
+    <section class="view" id="view-sync" hidden></section>
+  </main>
+
+  <footer class="footer wrap" id="footer"></footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

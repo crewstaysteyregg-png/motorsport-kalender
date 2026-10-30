@@ -1,0 +1,131 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Motorsport-Kalender//DE
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Motorsport · IMSA WeatherTech
+X-WR-TIMEZONE:Europe/Vienna
+REFRESH-INTERVAL;VALUE=DURATION:PT6H
+X-PUBLISHED-TTL:PT6H
+BEGIN:VEVENT
+UID:imsa-2027-rolex-24-at-daytona-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270128
+DTEND;VALUE=DATE:20270201
+SUMMARY:IMSA · Rolex 24 At Daytona · Rennwochenende
+LOCATION:Daytona International Speedway\, Daytona Beach\, USA
+DESCRIPTION:IMSA WeatherTech\nRolex 24 At Daytona\nZeiten ohne Gewähr. Que
+ lle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-mobil-1-twelve-hours-of-sebring-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270317
+DTEND;VALUE=DATE:20270321
+SUMMARY:IMSA · Mobil 1 Twelve Hours of Sebring · Rennwochenende
+LOCATION:Sebring International Raceway\, Sebring\, USA
+DESCRIPTION:IMSA WeatherTech\nMobil 1 Twelve Hours of Sebring\nZeiten ohne 
+ Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-acura-grand-prix-of-long-beach-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270416
+DTEND;VALUE=DATE:20270418
+SUMMARY:IMSA · Acura Grand Prix of Long Beach · Rennwochenende
+LOCATION:Long Beach Street Circuit\, Long Beach\, USA
+DESCRIPTION:IMSA WeatherTech\nAcura Grand Prix of Long Beach\nZeiten ohne G
+ ewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-monterey-sportscar-championship-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270430
+DTEND;VALUE=DATE:20270503
+SUMMARY:IMSA · Monterey SportsCar Championship · Rennwochenende
+LOCATION:WeatherTech Raceway Laguna Seca\, Monterey\, USA
+DESCRIPTION:IMSA WeatherTech\nMonterey SportsCar Championship\nZeiten ohne 
+ Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-chevrolet-detroit-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270604
+DTEND;VALUE=DATE:20270606
+SUMMARY:IMSA · Chevrolet Detroit Grand Prix · Rennwochenende
+LOCATION:Detroit Street Circuit\, Detroit\, USA
+DESCRIPTION:IMSA WeatherTech\nChevrolet Detroit Grand Prix\nZeiten ohne Gew
+ ähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-sahlen-s-six-hours-of-the-glen-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270624
+DTEND;VALUE=DATE:20270628
+SUMMARY:IMSA · Sahlen's Six Hours of The Glen · Rennwochenende
+LOCATION:Watkins Glen International\, Watkins Glen\, USA
+DESCRIPTION:IMSA WeatherTech\nSahlen's Six Hours of The Glen\nZeiten ohne G
+ ewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-chevrolet-grand-prix-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270709
+DTEND;VALUE=DATE:20270712
+SUMMARY:IMSA · Chevrolet Grand Prix · Rennwochenende
+LOCATION:Canadian Tire Motorsport Park\, Bowmanville\, Kanada
+DESCRIPTION:IMSA WeatherTech\nChevrolet Grand Prix\nZeiten ohne Gewähr. Qu
+ elle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-imsa-sportscar-weekend-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270729
+DTEND;VALUE=DATE:20270802
+SUMMARY:IMSA · IMSA SportsCar Weekend · Rennwochenende
+LOCATION:Road America\, Elkhart Lake\, USA
+DESCRIPTION:IMSA WeatherTech\nIMSA SportsCar Weekend\nZeiten ohne Gewähr. 
+ Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-michelin-gt-challenge-at-vir-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270820
+DTEND;VALUE=DATE:20270823
+SUMMARY:IMSA · Michelin GT Challenge at VIR · Rennwochenende
+LOCATION:VIRginia International Raceway\, Alton\, USA
+DESCRIPTION:IMSA WeatherTech\nMichelin GT Challenge at VIR\nZeiten ohne Gew
+ ähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-tirerack-com-battle-on-the-bricks-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20270917
+DTEND;VALUE=DATE:20270920
+SUMMARY:IMSA · TireRack.com Battle on the Bricks · Rennwochenende
+LOCATION:Indianapolis Motor Speedway\, Indianapolis\, USA
+DESCRIPTION:IMSA WeatherTech\nTireRack.com Battle on the Bricks\nZeiten ohn
+ e Gewähr. Quelle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+BEGIN:VEVENT
+UID:imsa-2027-motul-petit-le-mans-weekend@motorsport-kalender
+DTSTAMP:20261030T215502Z
+DTSTART;VALUE=DATE:20271006
+DTEND;VALUE=DATE:20271010
+SUMMARY:IMSA · Motul Petit Le Mans · Rennwochenende
+LOCATION:Michelin Raceway Road Atlanta\, Braselton\, USA
+DESCRIPTION:IMSA WeatherTech\nMotul Petit Le Mans\nZeiten ohne Gewähr. Que
+ lle: Offizieller Saisonkalender (manuell erfasst)
+CATEGORIES:IMSA
+END:VEVENT
+END:VCALENDAR
