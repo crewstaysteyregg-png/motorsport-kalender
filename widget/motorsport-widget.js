@@ -145,7 +145,8 @@ function countdownText(target) {
   const h = Math.floor(t / 3600); t %= 3600;
   const m = Math.floor(t / 60);
   if (d > 0) return `${d} T ${String(h).padStart(2, '0')} Std`;
-  return `${h} Std ${String(m).padStart(2, '0')} Min`;
+  if (h > 0) return `${h} Std ${String(m).padStart(2, '0')} Min`;
+  return m > 0 ? `${m} Min` : 'gleich';
 }
 function shortName(n) { return n.replace(/Grand Prix/i, 'GP').replace(/^\d+(st|nd|rd|th) Annual /i, ''); }
 
@@ -193,22 +194,19 @@ function pickTargets(list) {
   return { next: pool.find(x => x.start > now) || null };
 }
 
-// Widget genau beim Start neu laden lassen, damit der iOS-Timer danach nicht hochzählt,
-// sondern gleich zum nächsten Event wechselt.
+// Der Countdown ist fester Text (kein iOS-Timer, der nach dem Start hochzählen würde).
+// Kurz vor dem Start öfter neu laden, beim Start gleich zum nächsten Event wechseln.
 function nextRefresh(next) {
   const now = Date.now();
   const marks = [now + 15 * 60e3];
-  if (next) marks.push(next.start.getTime() + 15e3);
+  if (next) {
+    if (next.start.getTime() - now < 3 * 3600e3) marks.push(now + 5 * 60e3);
+    marks.push(next.start.getTime() + 15e3);
+  }
   return new Date(Math.max(now + 60e3, Math.min(...marks)));
 }
 
 function addCountdown(stack, target, size) {
-  const diff = target.start - new Date();
-  if (!target.allDay && diff < 864e5) {
-    const d = stack.addDate(target.start); d.applyTimerStyle();
-    d.font = Font.heavyMonospacedSystemFont(size); d.textColor = Color.white();
-    return d;
-  }
   const d = stack.addText(countdownText(target.start));
   d.font = Font.heavySystemFont(size - 2); d.textColor = Color.white(); d.minimumScaleFactor = 0.7; d.lineLimit = 1;
   return d;
@@ -281,7 +279,7 @@ async function lockWidget(data, family) {
     w.addAccessoryWidgetBackground = true;
     const s = w.addText(short); s.font = Font.heavySystemFont(11); s.centerAlignText();
     if (days >= 1) { const t = w.addText(String(days)); t.font = Font.heavySystemFont(20); t.centerAlignText(); const u = w.addText(days === 1 ? 'Tag' : 'Tage'); u.font = Font.systemFont(9); u.centerAlignText(); }
-    else { const t = w.addDate(main.start); t.applyTimerStyle(); t.font = Font.heavySystemFont(11); t.centerAlignText(); }
+    else { const t = w.addText(countdownText(main.start).replace(/^(\d+) Std (\d+) Min$/, '$1:$2')); t.font = Font.heavySystemFont(14); t.minimumScaleFactor = 0.6; t.lineLimit = 1; t.centerAlignText(); }
   } else if (family === 'accessoryInline') {
     const t = w.addText(`${short} ${main.s.name} in ${countdownText(main.start)}`);
     t.lineLimit = 1;
