@@ -5,12 +5,17 @@
 /* ==========================================================
    Motorsport Kalender – Race-Countdown-Widget für Scriptable
    Größen: mittel (Home-Bildschirm), Sperrbildschirm (rechteckig, rund, Zeile)
-   Parameter (optional, im Widget unter „Parameter“):
-     leer        -> alle Serien, nächste Session
+   Einstellungen kommen aus der Web-App („Abo & Widget“ → „Ans Widget senden“):
+   gewählte Serien, Countdown-Ziel und Push-Erinnerungen mit eigenem Vorlauf.
+   Das Skript muss dafür in Scriptable „Motorsport“ heißen.
+
+   Parameter (optional, im Widget unter „Parameter“) überschreibt die Serien-Auswahl,
+   z. B. für ein zweites Widget nur für eine Serie:
      F1          -> nur Formel 1
      F1,DTM      -> mehrere Serien
                     Kürzel: F1, DTM, IMSA, GTWC, WEC, WRC, INDYCAR, NASCAR, MOTOGP
      race        -> Countdown nur bis zum nächsten Rennen (kombinierbar: F1,race)
+     session     -> Countdown bis zur nächsten Session
    ========================================================== */
 
 // >>> Hier die Adresse deiner GitHub-Pages-Seite eintragen (mit / am Ende):
@@ -32,11 +37,45 @@ const fm = FileManager.local();
 const CACHE = fm.joinPath(fm.cacheDirectory(), 'motorsport-kalender');
 if (!fm.fileExists(CACHE)) fm.createDirectory(CACHE, true);
 
-// ---------- Parameter
+// ---------- Einstellungen
+// Standardwerte; die Web-App setzt hier beim Kopieren deine aktuelle Auswahl ein.
+const DEFAULT_SETTINGS = { series: [], target: 'session', notify: { on: false, minutes: [15], types: 'all' } };
+const SETTINGS_FILE = fm.joinPath(fm.documentsDirectory(), 'motorsport-kalender-settings.json');
+
+function normalizeSettings(s) {
+  s = s || {};
+  const n = s.notify || {};
+  return {
+    series: (Array.isArray(s.series) ? s.series : []).map(x => String(x).toUpperCase()).filter(x => SERIES[x]),
+    target: s.target === 'race' ? 'race' : 'session',
+    notify: {
+      on: !!n.on,
+      minutes: (Array.isArray(n.minutes) ? n.minutes : [15]).map(Number).filter(m => m >= 0 && m <= 10080).slice(0, 6),
+      types: ['all', 'quali_race', 'race'].includes(n.types) ? n.types : 'all'
+    }
+  };
+}
+
+let settings = normalizeSettings(DEFAULT_SETTINGS);
+try { if (fm.fileExists(SETTINGS_FILE)) settings = normalizeSettings(JSON.parse(fm.readString(SETTINGS_FILE))); } catch (e) { /* Standard */ }
+
+// Aufruf aus der Web-App: scriptable:///run/Motorsport?cfg={...}
+const query = args.queryParameters || {};
+let justSaved = false;
+if (query.cfg) {
+  try {
+    settings = normalizeSettings(JSON.parse(query.cfg));
+    fm.writeString(SETTINGS_FILE, JSON.stringify(settings));
+    justSaved = true;
+  } catch (e) { /* ungültig, alte Einstellungen bleiben */ }
+}
+
+// Widget-Parameter hat Vorrang vor der Auswahl aus der App
 const param = String(args.widgetParameter || '').toUpperCase().split(/[,; ]+/).filter(Boolean);
-const onlyRace = param.includes('RACE') || param.includes('RENNEN');
-let enabled = param.filter(p => SERIES[p]);
+const paramSeries = param.filter(p => SERIES[p]);
+let enabled = paramSeries.length ? paramSeries : settings.series;
 if (!enabled.length) enabled = Object.keys(SERIES);
+const onlyRace = param.includes('RACE') || param.includes('RENNEN') || (settings.target === 'race' && !param.includes('SESSION'));
 
 // ---------- Daten laden (mit Offline-Cache)
 async function loadData() {
@@ -68,10 +107,10 @@ async function loadLogo(series) {
 
 function localMidnight(key) { const [y, m, d] = key.split('-').map(Number); return new Date(y, m - 1, d); }
 
-function slots(events) {
+function slots(events, series = enabled) {
   const out = [];
   for (const ev of events) {
-    if (!enabled.includes(ev.series)) continue;
+    if (!series.includes(ev.series)) continue;
     if (ev.sessions && ev.sessions.length) {
       for (const s of ev.sessions) {
         if (s.allDay) {
@@ -234,8 +273,78 @@ async function lockWidget(data, family) {
   return w;
 }
 
+// ---------- Push-Erinnerungen (lokal am iPhone geplant, kein Server nötig)
+const THREAD = 'motorsport-kalender';
+
+function fmtLead(m) {
+  if (m === 0) return 'jetzt';
+  if (m % 1440 === 0) return m === 1440 ? '1 Tag' : `${m / 1440} Tagen`;
+  if (m % 60 === 0) return m === 60 ? '1 Stunde' : `${m / 60} Stunden`;
+  if (m > 60) return `${Math.floor(m / 60)} Std ${m % 60} Min`;
+  return `${m} Minuten`;
+}
+
+function wantsType(type) {
+  const t = settings.notify.types;
+  if (t === 'race') return type === 'race';
+  if (t === 'quali_race') return ['quali', 'sprintquali', 'sprint', 'race'].includes(type);
+  return true;
+}
+
+async function scheduleNotifications(events) {
+  // alte Erinnerungen dieses Kalenders entfernen und neu planen
+  try {
+    const pending = (await Notification.allPending()).filter(x => x.threadIdentifier === THREAD);
+    if (pending.length) await Notification.removePending(pending.map(x => x.identifier));
+  } catch (e) { /* nichts geplant */ }
+  if (!settings.notify.on || !settings.notify.minutes.length) return 0;
+
+  const now = Date.now();
+  const horizon = now + 8 * 864e5;
+  const items = [];
+  // Erinnerungen immer für die Auswahl aus der App, nicht für den Parameter eines einzelnen Widgets
+  const series = settings.series.length ? settings.series : Object.keys(SERIES);
+  for (const x of slots(events, series)) {
+    if (x.allDay || !wantsType(x.s.type)) continue;
+    for (const m of settings.notify.minutes) {
+      const t = x.start.getTime() - m * 60e3;
+      if (t > now + 30e3 && t < horizon) items.push({ x, m, t });
+    }
+  }
+  items.sort((a, b) => a.t - b.t);
+  const dfT = new DateFormatter(); dfT.locale = 'de_AT'; dfT.dateFormat = 'HH:mm';
+  let count = 0;
+  for (const { x, m, t } of items.slice(0, 40)) {   // iOS erlaubt max. 64 geplante Mitteilungen
+    const n = new Notification();
+    n.identifier = `mk-${x.s.id || x.ev.id}-${m}`;
+    n.threadIdentifier = THREAD;
+    n.title = `🏁 ${SERIES[x.ev.series].short} · ${shortName(x.ev.name)}`;
+    n.body = m === 0 ? `${x.s.name} startet jetzt.` : `${x.s.name} startet in ${fmtLead(m)} (${dfT.string(x.start)} Uhr).`;
+    n.openURL = BASE_URL;
+    n.sound = 'default';
+    n.setTriggerDate(new Date(t));
+    try { await n.schedule(); count++; } catch (e) { /* keine Berechtigung */ }
+  }
+  return count;
+}
+
 // ---------- Start
 const data = await loadData();
+let planned = 0;
+if (data) planned = await scheduleNotifications(data.events);
+
+if (justSaved && !config.runsInWidget && !config.runsInAccessoryWidget) {
+  const a = new Alert();
+  a.title = 'Einstellungen übernommen';
+  const ser = settings.series.length ? settings.series.map(s => SERIES[s].short).join(', ') : 'alle';
+  const push = settings.notify.on
+    ? `${settings.notify.minutes.map(fmtLead).join(' + ')} vorher · ${planned} Erinnerungen für die nächsten Tage geplant`
+    : 'aus';
+  a.message = `Serien: ${ser}\nCountdown: ${settings.target === 'race' ? 'nächstes Rennen' : 'nächste Session'}\nPush: ${push}`;
+  a.addAction('OK');
+  await a.present();
+}
+
 let widget;
 if (!data) {
   widget = new ListWidget();

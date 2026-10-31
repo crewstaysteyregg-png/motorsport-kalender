@@ -29,8 +29,29 @@
     target: load('mk.target', 'session'),
     month: null, selDay: null,
     resSeries: null, resEvent: null, resSession: 0, resClass: '',
-    stSeries: null, stTable: 0
+    stSeries: null, stTable: 0,
+    push: load('mk.push', { on: false, minutes: [15], types: 'all' })
   };
+  const IS_IOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const LEADS = [[0, 'Zum Start'], [5, '5 Min'], [10, '10 Min'], [15, '15 Min'], [30, '30 Min'], [60, '1 Std'], [120, '2 Std'], [1440, '1 Tag']];
+
+  // Einstellungen, die das Scriptable-Widget übernimmt
+  function widgetConfig() {
+    return {
+      series: state.enabled.length === ORDER.length ? [] : state.enabled.slice(),
+      target: state.target,
+      notify: { on: !!state.push.on, minutes: state.push.minutes.slice(), types: state.push.types }
+    };
+  }
+  function sendToWidget() {
+    location.href = 'scriptable:///run/Motorsport?cfg=' + encodeURIComponent(JSON.stringify(widgetConfig()));
+    hideSyncHint();
+  }
+  function showSyncHint() {
+    if (!IS_IOS) return;
+    const h = document.getElementById('syncHint'); if (h) h.hidden = false;
+  }
+  function hideSyncHint() { const h = document.getElementById('syncHint'); if (h) h.hidden = true; }
 
   // Neu hinzugekommene Serien automatisch einblenden (auch bei gespeicherter Auswahl)
   (function () {
@@ -143,6 +164,7 @@
       lastHeroKey = '';
       tick();
       renderView();
+      showSyncHint();
     }));
   }
 
@@ -398,7 +420,33 @@
     const webcal = (f) => http(f).replace(/^https?:/, 'webcal:');
     const row = (code, label, file) => `<div class="subrow">${code ? logo(code) : '<span class="logo logo--dark" style="width:44px;height:32px">🏁</span>'}<span>${esc(label)}</span>
       <a class="btn btn--primary" href="${esc(webcal(file))}">Abonnieren</a><button class="btn" data-copy="${esc(http(file))}" title="Link kopieren">⧉</button></div>`;
-    el.innerHTML = `<div class="panels">
+    const p = state.push;
+    const allSel = state.enabled.length === ORDER.length;
+    const selChips = (allSel ? ['Alle Serien'] : state.enabled.map(k => SERIES[k].short)).map(s => `<span class="clsb">${esc(s)}</span>`).join(' ');
+    const customs = p.minutes.filter(m => !LEADS.some(l => l[0] === m));
+    el.innerHTML = `<section class="panel carbon-soft settings">
+        <h2>Widget &amp; Push-Erinnerungen</h2>
+        <p>Das iPhone-Widget zeigt genau die Serien, die oben ausgewählt sind. Änderst du die Auswahl, tippe danach auf <b>„Ans Widget senden“</b>.</p>
+        <div class="setrow"><span class="setlabel">Serien</span><div>${selChips}</div></div>
+        <div class="setrow"><span class="setlabel">Countdown</span><div>${state.target === 'race' ? 'bis zum nächsten Rennen' : 'bis zur nächsten Session'} <span class="muted">(oben beim Countdown umschaltbar)</span></div></div>
+        <div class="setrow"><span class="setlabel">Push</span>
+          <label class="switch"><input type="checkbox" id="pushOn" ${p.on ? 'checked' : ''}><span class="switch__ui"></span><span>${p.on ? 'Erinnerungen an' : 'Erinnerungen aus'}</span></label></div>
+        <div class="setrow" ${p.on ? '' : 'hidden'}><span class="setlabel">Vorlauf</span>
+          <div><div class="pills">${LEADS.map(([m, l]) => `<button class="pillbtn ${p.minutes.includes(m) ? 'is-on' : ''}" data-lead="${m}">${l}</button>`).join('')}
+            ${customs.map(m => `<button class="pillbtn is-on" data-lead="${m}">${m} Min ✕</button>`).join('')}</div>
+            <div class="custom-lead"><input type="number" min="1" max="10080" inputmode="numeric" id="leadCustom" placeholder="eigener Wert"><span>Minuten vorher</span><button class="btn" id="leadAdd">Hinzufügen</button></div>
+            <p class="hint">Mehrere Zeiten möglich (bis zu 6), z. B. 1 Tag und 15 Minuten vorher.</p></div></div>
+        <div class="setrow" ${p.on ? '' : 'hidden'}><span class="setlabel">Für</span>
+          <select class="select" id="pushTypes">
+            <option value="all" ${p.types === 'all' ? 'selected' : ''}>Alle Sessions (inkl. Trainings)</option>
+            <option value="quali_race" ${p.types === 'quali_race' ? 'selected' : ''}>Qualifying, Sprint &amp; Rennen</option>
+            <option value="race" ${p.types === 'race' ? 'selected' : ''}>Nur Rennen</option>
+          </select></div>
+        <div class="setrow"><span class="setlabel"></span><div>
+          <button class="btn btn--primary" id="sendWidget">📲 Ans Widget senden</button>
+          <p class="hint">Öffnet Scriptable und übernimmt die Einstellungen (Skript muss „Motorsport“ heißen). Beim ersten Mal fragt das iPhone, ob Scriptable Mitteilungen senden darf: <b>Erlauben</b>. Die Erinnerungen werden am iPhone geplant und bei jeder Widget-Aktualisierung erneuert.</p></div></div>
+      </section>
+      <div class="panels">
       <section class="panel carbon-soft"><h2>Kalender-Abo</h2>
         <p>Alle Termine automatisch im iPhone-Kalender. Das Abo aktualisiert sich selbst, neue Termine und Zeitänderungen kommen von allein.</p>
         <div class="sublist">${row('', 'Alle Serien', 'alle.ics')}${ORDER.map(k => row(k, SERIES[k].name, k.toLowerCase() + '.ics')).join('')}</div>
@@ -411,15 +459,34 @@
           <li><button class="btn btn--primary" id="copyWidget">Widget-Skript kopieren</button><br>Die Adresse dieser Seite ist darin schon eingetragen.</li>
           <li>In Scriptable mit <b>+</b> ein neues Skript anlegen, alles einfügen und als „Motorsport“ speichern.</li>
           <li>Home-Bildschirm lange drücken → <b>+</b> → Scriptable → <b>mittleres Widget</b>. Widget antippen und halten → Bearbeiten → Skript wählen.</li>
-          <li>Unter <b>Parameter</b> optional Serien eintragen, z. B. <code>F1</code> oder <code>F1,DTM</code>. Mit <code>race</code> zählt der Countdown nur bis zum nächsten Rennen, z. B. <code>F1,race</code>. Leer = alle Serien.</li>
           <li>Sperrbildschirm: lange drücken → Anpassen → Widgets → Scriptable (rechteckig oder rund) → gleiches Skript.</li>
+          <li>Oben <b>„Ans Widget senden“</b> antippen – damit übernimmt das Widget deine Serien-Auswahl und die Push-Einstellungen.</li>
+          <li>Optional für ein zweites Widget mit anderer Serie: unter <b>Parameter</b> z. B. <code>MOTOGP</code> eintragen. Der Parameter hat dort Vorrang vor der Auswahl.</li>
         </ol>
       </section></div>`;
+    // ---- Einstellungen bedienen
+    const savePush = () => { save('mk.push', state.push); renderSync(); showSyncHint(); };
+    $('#pushOn', el).addEventListener('change', (e) => { state.push.on = e.target.checked; savePush(); });
+    el.querySelectorAll('[data-lead]').forEach(b => b.addEventListener('click', () => {
+      const m = Number(b.dataset.lead);
+      const i = state.push.minutes.indexOf(m);
+      if (i >= 0) state.push.minutes.splice(i, 1);
+      else if (state.push.minutes.length < 6) state.push.minutes.push(m);
+      state.push.minutes.sort((a, z) => z - a);
+      savePush();
+    }));
+    $('#leadAdd', el).addEventListener('click', () => {
+      const m = Math.round(Number($('#leadCustom', el).value));
+      if (m >= 1 && m <= 10080 && !state.push.minutes.includes(m) && state.push.minutes.length < 6) { state.push.minutes.push(m); state.push.minutes.sort((a, z) => z - a); savePush(); }
+    });
+    $('#pushTypes', el).addEventListener('change', (e) => { state.push.types = e.target.value; savePush(); });
+    $('#sendWidget', el).addEventListener('click', sendToWidget);
     const cw = $('#copyWidget', el);
     cw.addEventListener('click', async () => {
       try {
         const src = await (await fetch('widget/motorsport-widget.js', { cache: 'no-cache' })).text();
-        const code = src.replace(/const BASE_URL = '[^']*';/, `const BASE_URL = '${base}';`);
+        const code = src.replace(/const BASE_URL = '[^']*';/, `const BASE_URL = '${base}';`)
+          .replace(/const DEFAULT_SETTINGS = \{.*\};/, `const DEFAULT_SETTINGS = ${JSON.stringify(widgetConfig())};`);
         await navigator.clipboard.writeText(code);
         cw.textContent = '✓ Kopiert';
       } catch (e) {
@@ -455,8 +522,12 @@
         state.target = b.dataset.target; save('mk.target', state.target);
         document.querySelectorAll('.seg__btn').forEach(x => x.classList.toggle('is-on', x === b));
         lastHeroKey = ''; tick();
+        if (state.view === 'sync') renderSync();
+        showSyncHint();
       });
     });
+    $('#syncSend').addEventListener('click', sendToWidget);
+    $('#syncClose').addEventListener('click', hideSyncHint);
   }
 
   init();

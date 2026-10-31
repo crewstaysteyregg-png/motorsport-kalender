@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;0,800;1,700;1,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=2">
+  <link rel="stylesheet" href="assets/style.css?v=3">
 </head>
 <body>
   <header class="topbar carbon">
@@ -37,6 +37,11 @@
 
   <main class="wrap">
     <nav class="filters" id="filters" aria-label="Serien filtern"></nav>
+    <div class="synchint" id="syncHint" hidden>
+      <span>Auswahl geändert – soll das iPhone-Widget sie übernehmen?</span>
+      <button class="btn btn--primary" id="syncSend">📲 Ans Widget senden</button>
+      <button class="btn btn--icon" id="syncClose" aria-label="Hinweis schließen">✕</button>
+    </div>
 
     <section class="hero carbon-soft" id="hero" aria-live="polite">
       <div class="hero__head">
@@ -66,6 +71,6 @@
 
   <footer class="footer wrap" id="footer"></footer>
 
-  <script src="assets/app.js?v=2"></script>
+  <script src="assets/app.js?v=3"></script>
 </body>
 </html>

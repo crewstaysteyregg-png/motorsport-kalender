@@ -41,8 +41,17 @@ Seite in Safari öffnen → Tab **„Abo & Widget“**.
   2. In der Web-App auf **„Widget-Skript kopieren“** tippen (Adresse ist schon eingetragen)
   3. In Scriptable **+** → einfügen → als „Motorsport“ speichern
   4. Home-Bildschirm lange drücken → **+** → Scriptable → **mittel** → Widget bearbeiten → Skript „Motorsport“
-  5. **Parameter** (optional): `F1` · `F1,DTM` · `MOTOGP,WEC` · `race` (nur Rennen) · `F1,race`
-     – Kürzel: `F1`, `DTM`, `IMSA`, `GTWC`, `WEC`, `WRC`, `INDYCAR`, `NASCAR`, `MOTOGP`
+  5. In der Web-App die gewünschten Serien oben auswählen und unter **„Abo & Widget“** auf
+     **„📲 Ans Widget senden“** tippen. Das Widget zeigt dann nur diese Serien, und der Countdown
+     läuft wie in der App bis zur nächsten Session oder zum nächsten Rennen.
+  6. **Push-Erinnerungen:** im selben Bereich einschalten, Vorlauf wählen (Zum Start, 5/10/15/30 Min,
+     1/2 Std, 1 Tag oder eigener Wert, bis zu 6 gleichzeitig) und festlegen, wofür (alle Sessions,
+     Qualifying/Sprint/Rennen oder nur Rennen). Danach **„Ans Widget senden“**. Beim ersten Mal
+     Mitteilungen für Scriptable **erlauben**. Die Erinnerungen plant Scriptable direkt am iPhone für die
+     nächsten 8 Tage und erneuert sie bei jeder Widget-Aktualisierung.
+  7. **Parameter** (optional, nur für ein zusätzliches Widget mit anderer Serie): `MOTOGP` ·
+     `F1,DTM` · `race` – der Parameter hat Vorrang vor der Auswahl aus der App.
+     Kürzel: `F1`, `DTM`, `IMSA`, `GTWC`, `WEC`, `WRC`, `INDYCAR`, `NASCAR`, `MOTOGP`
   6. Sperrbildschirm: lange drücken → *Anpassen* → *Widgets* → Scriptable (rechteckig/rund) → „Motorsport“
 
 ## 3. Datenquellen
