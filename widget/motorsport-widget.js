@@ -185,13 +185,43 @@ function logoBox(stack, img, w, h, dark) {
   return box;
 }
 
+// ---------- Countdown-Ziel
+// Der Countdown läuft immer zum nächsten Event, das noch NICHT begonnen hat.
+function pickTargets(list) {
+  const now = new Date();
+  const pool = onlyRace ? list.filter(x => x.s.type === 'race' || x.s.type === 'weekend') : list;
+  return { next: pool.find(x => x.start > now) || null };
+}
+
+// Widget genau beim Start neu laden lassen, damit der iOS-Timer danach nicht hochzählt,
+// sondern gleich zum nächsten Event wechselt.
+function nextRefresh(next) {
+  const now = Date.now();
+  const marks = [now + 15 * 60e3];
+  if (next) marks.push(next.start.getTime() + 15e3);
+  return new Date(Math.max(now + 60e3, Math.min(...marks)));
+}
+
+function addCountdown(stack, target, size) {
+  const diff = target.start - new Date();
+  if (!target.allDay && diff < 864e5) {
+    const d = stack.addDate(target.start); d.applyTimerStyle();
+    d.font = Font.heavyMonospacedSystemFont(size); d.textColor = Color.white();
+    return d;
+  }
+  const d = stack.addText(countdownText(target.start));
+  d.font = Font.heavySystemFont(size - 2); d.textColor = Color.white(); d.minimumScaleFactor = 0.7; d.lineLimit = 1;
+  return d;
+}
+
 // ---------- Widgets
 async function mediumWidget(data) {
   const w = new ListWidget();
   w.url = BASE_URL;
   w.setPadding(12, 16, 12, 12);
   const list = slots(data.events);
-  const main = (onlyRace ? list.filter(x => x.s.type === 'race' || x.s.type === 'weekend') : list)[0];
+  const { next: main } = pickTargets(list);
+  w.refreshAfterDate = nextRefresh(main);
   if (!main) {
     w.backgroundImage = carbon(338, 158, '#555');
     const t = w.addText('Keine kommenden Termine'); t.textColor = Color.white(); t.font = Font.semiboldSystemFont(14);
@@ -214,21 +244,15 @@ async function mediumWidget(data) {
   const ev = left.addText(shortName(main.ev.name).toUpperCase()); ev.font = Font.heavySystemFont(15); ev.textColor = Color.white(); ev.lineLimit = 1; ev.minimumScaleFactor = 0.7;
   const se = left.addText(main.s.name + ' · ' + fmtWhen(main)); se.font = Font.mediumSystemFont(10); se.textColor = new Color('#c9ccd2'); se.lineLimit = 1; se.minimumScaleFactor = 0.8;
   left.addSpacer();
-  const now = new Date();
-  if (main.start <= now && now < main.end) {
-    const live = left.addText('● LIVE'); live.font = Font.heavySystemFont(26); live.textColor = new Color('#ff2d55');
-  } else if (main.start - now < 864e5 && !main.allDay) {
-    const d = left.addDate(main.start); d.applyTimerStyle(); d.font = Font.heavyMonospacedSystemFont(30); d.textColor = Color.white();
-  } else {
-    const d = left.addText(countdownText(main.start)); d.font = Font.heavySystemFont(28); d.textColor = Color.white(); d.minimumScaleFactor = 0.7; d.lineLimit = 1;
-  }
+  addCountdown(left, main, 30);
 
-  // --- rechte Spalte: nächste Sessions
+  // --- rechte Spalte: die folgenden Sessions
   row.addSpacer(8);
   const right = row.addStack(); right.layoutVertically();
   const nt = right.addText('DANACH'); nt.font = Font.boldSystemFont(8); nt.textColor = new Color('#9a9aa3');
   right.addSpacer(4);
-  const next = list.filter(x => x !== main).slice(0, 4);
+  const now = new Date();
+  const next = list.filter(x => x !== main && x.start > now && x.start >= main.start).slice(0, 4);
   for (const x of next) {
     const r = right.addStack(); r.layoutHorizontally(); r.centerAlignContent();
     const bar = r.addStack(); bar.size = new Size(3, 22); bar.backgroundColor = new Color(SERIES[x.ev.series].color); bar.cornerRadius = 1.5;
@@ -239,7 +263,6 @@ async function mediumWidget(data) {
     right.addSpacer(4);
   }
   right.addSpacer();
-  w.refreshAfterDate = new Date(Date.now() + 15 * 60e3);
   return w;
 }
 
@@ -247,29 +270,26 @@ async function lockWidget(data, family) {
   const w = new ListWidget();
   w.url = BASE_URL;
   const list = slots(data.events);
-  const main = (onlyRace ? list.filter(x => x.s.type === 'race' || x.s.type === 'weekend') : list)[0];
+  const { next: main } = pickTargets(list);
+  w.refreshAfterDate = nextRefresh(main);
   if (!main) { w.addText('Keine Termine'); return w; }
   const now = new Date();
-  const live = main.start <= now && now < main.end;
   const days = Math.floor((main.start - now) / 864e5);
+  const short = SERIES[main.ev.series].short;
 
   if (family === 'accessoryCircular') {
     w.addAccessoryWidgetBackground = true;
-    const s = w.addText(SERIES[main.ev.series].short); s.font = Font.heavySystemFont(11); s.centerAlignText();
-    if (live) { const t = w.addText('LIVE'); t.font = Font.heavySystemFont(14); t.centerAlignText(); }
-    else if (days >= 1) { const t = w.addText(String(days)); t.font = Font.heavySystemFont(20); t.centerAlignText(); const u = w.addText(days === 1 ? 'Tag' : 'Tage'); u.font = Font.systemFont(9); u.centerAlignText(); }
+    const s = w.addText(short); s.font = Font.heavySystemFont(11); s.centerAlignText();
+    if (days >= 1) { const t = w.addText(String(days)); t.font = Font.heavySystemFont(20); t.centerAlignText(); const u = w.addText(days === 1 ? 'Tag' : 'Tage'); u.font = Font.systemFont(9); u.centerAlignText(); }
     else { const t = w.addDate(main.start); t.applyTimerStyle(); t.font = Font.heavySystemFont(11); t.centerAlignText(); }
   } else if (family === 'accessoryInline') {
-    const t = w.addText(live ? `${SERIES[main.ev.series].short} ${main.s.name}: LIVE` : `${SERIES[main.ev.series].short} ${main.s.name} in ${countdownText(main.start)}`);
+    const t = w.addText(`${short} ${main.s.name} in ${countdownText(main.start)}`);
     t.lineLimit = 1;
   } else {
-    const a = w.addText(`${SERIES[main.ev.series].short} · ${shortName(main.ev.name)}`); a.font = Font.heavySystemFont(13); a.lineLimit = 1;
+    const a = w.addText(`${short} · ${shortName(main.ev.name)}`); a.font = Font.heavySystemFont(13); a.lineLimit = 1;
     const b = w.addText(`${main.s.name} · ${fmtShort(main)}`); b.font = Font.systemFont(11); b.lineLimit = 1;
-    if (live) { const c = w.addText('● LIVE'); c.font = Font.heavySystemFont(16); }
-    else if (days >= 1) { const c = w.addText(countdownText(main.start)); c.font = Font.heavySystemFont(16); }
-    else { const c = w.addDate(main.start); c.applyTimerStyle(); c.font = Font.heavyMonospacedSystemFont(16); }
+    addCountdown(w, main, 16);
   }
-  w.refreshAfterDate = new Date(Date.now() + 15 * 60e3);
   return w;
 }
 

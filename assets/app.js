@@ -170,24 +170,25 @@
 
   // ------------------------------------------------------------ Countdown
   let lastHeroKey = '';
-  function nextSlot() {
+  // Countdown immer zur nächsten Session, die noch nicht begonnen hat; laufende Session separat als „Live“
+  function heroTargets() {
     const now = Date.now();
-    let list = slots(visibleEvents()).filter(x => x.end > now);
-    if (state.target === 'race') list = list.filter(x => x.s.type === 'race' || x.s.type === 'weekend');
-    return list[0] || null;
+    const all = slots(visibleEvents());
+    let pool = all.filter(x => x.start > now);
+    if (state.target === 'race') pool = pool.filter(x => x.s.type === 'race' || x.s.type === 'weekend');
+    return { n: pool[0] || null, live: all.find(x => !x.allDay && x.start <= now && now < x.end) || null };
   }
 
   function tick() {
     const body = $('#heroBody');
-    const n = nextSlot();
+    const { n, live } = heroTargets();
     const hero = $('#hero');
     if (!n) {
       if (lastHeroKey !== 'none') { body.innerHTML = '<p class="empty">Keine kommenden Termine für die gewählten Serien.</p>'; lastHeroKey = 'none'; }
       return;
     }
-    const key = (n.s.id || n.ev.id) + state.target;
+    const key = (n.s.id || n.ev.id) + state.target + (live ? (live.s.id || live.ev.id) : '');
     const now = Date.now();
-    const live = n.start <= now && now < n.end;
     if (key !== lastHeroKey) {
       lastHeroKey = key;
       hero.style.setProperty('--c', SERIES[n.ev.series].color);
@@ -200,11 +201,11 @@
           <div class="hero__series">${esc(SERIES[n.ev.series].name)}${n.ev.cup ? ' · ' + esc(n.ev.cup) : ''}</div>
           <div class="hero__event">${esc(n.ev.name)}</div>
           <div class="hero__meta"><strong>${esc(n.s.name)}</strong> · ${esc(when)}${n.ev.circuit && n.ev.circuit !== n.ev.name ? ' · ' + esc(n.ev.circuit) : ''}</div>
+          ${live ? `<div class="hero__meta" style="margin-top:6px"><span class="live">Live</span> ${esc(SERIES[live.ev.series].short)} · ${esc(live.ev.name)} · ${esc(live.s.name)}</div>` : ''}
         </div>
         <div class="countdown" id="cd"></div>`;
     }
     const cd = $('#cd');
-    if (live) { cd.innerHTML = '<span class="live">Live</span>'; return; }
     let t = Math.max(0, Math.floor((n.start - now) / 1000));
     const d = Math.floor(t / 86400); t %= 86400;
     const h = Math.floor(t / 3600); t %= 3600;
