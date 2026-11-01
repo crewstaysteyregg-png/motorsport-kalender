@@ -46,6 +46,7 @@ function normalizeSettings(s) {
   s = s || {};
   const n = s.notify || {};
   return {
+    saved: Number(s.saved) || 0,
     series: (Array.isArray(s.series) ? s.series : []).map(x => String(x).toUpperCase()).filter(x => SERIES[x]),
     target: s.target === 'race' ? 'race' : 'session',
     notify: {
@@ -56,8 +57,22 @@ function normalizeSettings(s) {
   };
 }
 
-let settings = normalizeSettings(DEFAULT_SETTINGS);
-try { if (fm.fileExists(SETTINGS_FILE)) settings = normalizeSettings(JSON.parse(fm.readString(SETTINGS_FILE))); } catch (e) { /* Standard */ }
+// Gespeichert wird im Schlüsselbund (App und Widget teilen ihn sicher) und zusätzlich als Datei.
+// Es gilt immer die neueste Einstellung – auch die beim Kopieren ins Skript eingetragene.
+const SETTINGS_KEY = 'motorsport-kalender-settings';
+function readStored() {
+  const out = [];
+  try { if (Keychain.contains(SETTINGS_KEY)) out.push(normalizeSettings(JSON.parse(Keychain.get(SETTINGS_KEY)))); } catch (e) { /* leer */ }
+  try { if (fm.fileExists(SETTINGS_FILE)) out.push(normalizeSettings(JSON.parse(fm.readString(SETTINGS_FILE)))); } catch (e) { /* leer */ }
+  return out;
+}
+function storeSettings(s) {
+  const json = JSON.stringify(s);
+  try { Keychain.set(SETTINGS_KEY, json); } catch (e) { /* weiter mit Datei */ }
+  try { fm.writeString(SETTINGS_FILE, json); } catch (e) { /* nur Schlüsselbund */ }
+}
+
+let settings = [normalizeSettings(DEFAULT_SETTINGS), ...readStored()].reduce((a, b) => (b.saved > a.saved ? b : a));
 
 // Aufruf aus der Web-App: scriptable:///run/Motorsport?cfg={...}
 const query = args.queryParameters || {};
@@ -65,7 +80,8 @@ let justSaved = false;
 if (query.cfg) {
   try {
     settings = normalizeSettings(JSON.parse(query.cfg));
-    fm.writeString(SETTINGS_FILE, JSON.stringify(settings));
+    if (!settings.saved) settings.saved = Date.now();
+    storeSettings(settings);
     justSaved = true;
   } catch (e) { /* ungültig, alte Einstellungen bleiben */ }
 }
@@ -358,7 +374,7 @@ if (justSaved && !config.runsInWidget && !config.runsInAccessoryWidget) {
   const push = settings.notify.on
     ? `${settings.notify.minutes.map(fmtLead).join(' + ')} vorher · ${planned} Erinnerungen für die nächsten Tage geplant`
     : 'aus';
-  a.message = `Serien: ${ser}\nCountdown: ${settings.target === 'race' ? 'nächstes Rennen' : 'nächste Session'}\nPush: ${push}`;
+  a.message = `Serien: ${ser}\nCountdown: ${settings.target === 'race' ? 'nächstes Rennen' : 'nächste Session'}\nPush: ${push}\n\nDas Widget am Home-Bildschirm übernimmt das, sobald iOS es neu lädt (meist nach wenigen Minuten). Sofort: Widget lange drücken → „Widget bearbeiten“ → außerhalb tippen.`;
   a.addAction('OK');
   await a.present();
 }

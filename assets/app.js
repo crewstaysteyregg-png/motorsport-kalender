@@ -38,6 +38,7 @@
   // Einstellungen, die das Scriptable-Widget übernimmt
   function widgetConfig() {
     return {
+      saved: Date.now(),
       series: state.enabled.length === ORDER.length ? [] : state.enabled.slice(),
       target: state.target,
       notify: { on: !!state.push.on, minutes: state.push.minutes.slice(), types: state.push.types }
