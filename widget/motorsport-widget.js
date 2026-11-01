@@ -18,8 +18,8 @@
      session     -> Countdown bis zur nächsten Session
    ========================================================== */
 
-// >>> Hier die Adresse deiner GitHub-Pages-Seite eintragen (mit / am Ende):
-const BASE_URL = 'https://DEIN-NAME.github.io/motorsport-kalender/';
+// Adresse der GitHub-Pages-Seite (mit / am Ende); die Web-App trägt sie beim Kopieren ein.
+const BASE_URL = 'https://crewstaysteyregg-png.github.io/motorsport-kalender/';
 
 const SERIES = {
   F1:      { name: 'Formel 1', short: 'F1', color: '#e10600', logo: 'f1.png' },
@@ -349,7 +349,7 @@ async function scheduleNotifications(events) {
 // ---------- Start
 const data = await loadData();
 let planned = 0;
-if (data) planned = await scheduleNotifications(data.events);
+try { if (data) planned = await scheduleNotifications(data.events); } catch (e) { /* Widget trotzdem zeigen */ }
 
 if (justSaved && !config.runsInWidget && !config.runsInAccessoryWidget) {
   const a = new Alert();
@@ -371,7 +371,16 @@ if (!data) {
   t.textColor = Color.white(); t.font = Font.mediumSystemFont(12);
 } else {
   const fam = config.widgetFamily || 'medium';
-  widget = fam.startsWith('accessory') ? await lockWidget(data, fam) : await mediumWidget(data);
+  try {
+    widget = fam.startsWith('accessory') ? await lockWidget(data, fam) : await mediumWidget(data);
+  } catch (e) {
+    // Fehler sichtbar machen statt eines leeren Widgets
+    widget = new ListWidget();
+    widget.backgroundColor = new Color('#111113');
+    widget.refreshAfterDate = new Date(Date.now() + 15 * 60e3);
+    const t = widget.addText('Widget-Fehler: ' + e.message);
+    t.textColor = Color.white(); t.font = Font.mediumSystemFont(11);
+  }
 }
 
 if (config.runsInWidget || config.runsInAccessoryWidget) {

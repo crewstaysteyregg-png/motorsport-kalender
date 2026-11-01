@@ -457,7 +457,7 @@
         <p>Race-Countdown mit Serien-Logo im Carbon-Look, als mittleres Widget und für den Sperrbildschirm.</p>
         <ol class="steps">
           <li>Die kostenlose App <b>Scriptable</b> aus dem App Store laden.</li>
-          <li><button class="btn btn--primary" id="copyWidget">Widget-Skript kopieren</button><br>Die Adresse dieser Seite ist darin schon eingetragen.</li>
+          <li><button class="btn btn--primary" id="copyWidget">Widget-Skript kopieren</button><br>Die Adresse dieser Seite ist darin schon eingetragen.<textarea id="widgetCode" readonly hidden rows="8" style="width:100%;margin-top:8px;font:11px monospace;background:#0d0d0f;color:#c9ccd2;border:1px solid #333;border-radius:6px"></textarea></li>
           <li>In Scriptable mit <b>+</b> ein neues Skript anlegen, alles einfügen und als „Motorsport“ speichern.</li>
           <li>Home-Bildschirm lange drücken → <b>+</b> → Scriptable → <b>mittleres Widget</b>. Widget antippen und halten → Bearbeiten → Skript wählen.</li>
           <li>Sperrbildschirm: lange drücken → Anpassen → Widgets → Scriptable (rechteckig oder rund) → gleiches Skript.</li>
@@ -483,18 +483,25 @@
     $('#pushTypes', el).addEventListener('change', (e) => { state.push.types = e.target.value; savePush(); });
     $('#sendWidget', el).addEventListener('click', sendToWidget);
     const cw = $('#copyWidget', el);
+    // Skript vorab laden: Safari erlaubt das Kopieren nur direkt beim Antippen, nicht nach einem Download.
+    const srcP = fetch('widget/motorsport-widget.js', { cache: 'no-cache' }).then(r => r.text());
+    const widgetCode = () => srcP.then(src => src.replace(/const BASE_URL = '[^']*';/, `const BASE_URL = '${base}';`)
+      .replace(/const DEFAULT_SETTINGS = \{.*\};/, `const DEFAULT_SETTINGS = ${JSON.stringify(widgetConfig())};`));
     cw.addEventListener('click', async () => {
       try {
-        const src = await (await fetch('widget/motorsport-widget.js', { cache: 'no-cache' })).text();
-        const code = src.replace(/const BASE_URL = '[^']*';/, `const BASE_URL = '${base}';`)
-          .replace(/const DEFAULT_SETTINGS = \{.*\};/, `const DEFAULT_SETTINGS = ${JSON.stringify(widgetConfig())};`);
-        await navigator.clipboard.writeText(code);
+        if (window.ClipboardItem && navigator.clipboard.write) {
+          await navigator.clipboard.write([new ClipboardItem({ 'text/plain': widgetCode().then(c => new Blob([c], { type: 'text/plain' })) })]);
+        } else {
+          await navigator.clipboard.writeText(await widgetCode());
+        }
         cw.textContent = '✓ Kopiert';
       } catch (e) {
-        cw.textContent = 'Kopieren nicht möglich – Skript öffnen';
-        location.href = 'widget/motorsport-widget.js';
+        // Notlösung: Skript zum manuellen Kopieren anzeigen (mit eingetragener Adresse)
+        const box = $('#widgetCode', el);
+        box.value = await widgetCode(); box.hidden = false; box.focus(); box.select();
+        cw.textContent = 'Text unten markieren und kopieren';
       }
-      setTimeout(() => { cw.textContent = 'Widget-Skript kopieren'; }, 2500);
+      setTimeout(() => { cw.textContent = 'Widget-Skript kopieren'; }, 4000);
     });
     el.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
       try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = '✓'; setTimeout(() => { b.textContent = '⧉'; }, 1500); }
